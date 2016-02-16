@@ -1,0 +1,1 @@
+{"attributes": ["SID", "FNAME", "LNAME"], "data": [{"LNAME": "Sullivan", "FNAME": "Anne", "SID": 1}, {"LNAME": "Jones", "FNAME": "Forrest", "SID": 12}, {"LNAME": "Burrell", "FNAME": "Thomas", "SID": 11}, {"LNAME": "Jones", "FNAME": "James", "SID": 3}, {"LNAME": "Lucas", "FNAME": "Randy", "SID": 6}], "name": "Students A"}
