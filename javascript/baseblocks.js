@@ -1372,6 +1372,11 @@ ScriptMorph.prototype.queryUpdate = function(){
             if (query) {
                 textbox.setText(query['relalg']);
             }
+            //Anthony Van Nieuwenhuyse 1376-1379 (Fixed display text when query error.)
+            else{
+                tableCreate('table_data', null);
+                textbox.setText("Relation Algebra Expression:");
+            }
             /*var queryChildren = roots[0].nextBlocks();
 
             for (var i = 0; i < queryChildren.length; i++) {
