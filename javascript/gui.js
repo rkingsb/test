@@ -389,7 +389,7 @@ GuiMorph.prototype.droppedText = function(result, name){
     // name and function have matching indices
     for (var idx=0; idx < temp.length; idx++){
         var temp2 = re.exec(temp[idx]);
-        var attr = temp2[1];
+        var attr = temp2[1].toUpperCase();//Modified by Yasin Silva. We convert all the attribute names to uppercase.
         var type_ = temp2[2];
         dataset['attributes'].push(attr);
         if (type_ == 'STRING'){
