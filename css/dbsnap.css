@@ -1,0 +1,115 @@
+body {
+    overflow: hidden;
+}
+
+.errorText {
+    color: red;
+    font-weight: bold;
+    font-style: italic;
+}
+
+#data-tables-wrapper {
+    background-color: #EEEEEE;
+    width: 400px;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    right: 0;
+    border-left: solid #282828 5px;
+    font-family: Arial, Sans-Serif;
+    padding: 4px;
+}
+
+.table-header {
+    font-size: 18px;
+    font-weight: bold;
+    border-bottom: solid gainsboro thin;
+}
+
+.count{
+    font-size: 12px;
+}
+
+.icons {
+    margin-right: 10px;
+    float: right;
+    cursor: pointer;
+    display: none;
+}
+
+.icons:hover {
+    color: royalblue;
+}
+
+.chart-wrapper {
+    height: 90%;
+}
+
+.result-container {
+    height: calc(50vh - 34px);
+    overflow: auto;
+}
+
+.result-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+}
+
+.result-table tr:hover {
+    background-color: dimgray;
+    color: white;
+    cursor: text;
+}
+
+.result-table th,
+.result-table td {
+    text-align: left;
+    border: solid gainsboro thin;
+    white-space: nowrap;
+    overflow: auto;
+    height: 16px;
+}
+
+.result-modal {
+    min-width: 50vw;
+    max-height: 50vh;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+.result-modal tr:hover {
+    background-color: dimgray;
+    color: white;
+    cursor: text;
+}
+
+.result-modal th,
+.result-modal td {
+    text-align: left;
+    border: solid gainsboro thin;
+    white-space: nowrap;
+    overflow: auto;
+}
+
+.ui-dialog .ui-dialog-content {
+    padding: 2px;
+}
+
+.ui-widget-overlay {
+    opacity: .4;
+    background: black;
+}
+
+#add-row-btn{
+    float: right;
+    margin-top: 10px;
+}
+
+.delete-row-icon{
+    cursor: pointer;
+}
+
+.chart-modal{
+    overflow: hidden !important;
+}
