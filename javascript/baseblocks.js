@@ -1,14 +1,12 @@
 var dataTableWidth = 400;
 var dataTableHeight = 210;
 
-
 Morph.prototype.contextMenu = function () {
     nop()
 };
 WorldMorph.prototype.contextMenu = function () {
     nop()
 };
-
 
 if (typeof String.prototype.startsWith != 'function') {
     String.prototype.startsWith = function (str) {
@@ -34,77 +32,6 @@ click.src = 'media/click.wav';
 var clickSound = function () {
     click.play();
 };
-function tableCreate(name, data, operator) {
-    var height = (window.innerHeight - dataTableHeight) / 2; //200 for linux systems
-    var matrix = [];
-    var col_names = []; //data['attributes'];
-    if (data && data['data'].length > 0) {
-        if (name == 'table_data') {
-            var title = document.getElementById('result_node');
-            title.innerHTML = "<b>Node Result (" + operator + ")</b>";
-        }
-        for (var index = 0; index < data['attributes'].length; index++) {
-            col_names.push({'title': data['attributes'][index]});
-        }
-//    for (var key in data['attributes']){
-//        col_names.push({'title': key});
-//    }
-//        if (data[0].hasOwnProperty(key)){
-//            col_names.push({"title": key});}}
-//    for (var i=0; i < data.length; i++){
-//        var entry = [];
-//        for (var key_idx=0; key_idx < col_names.length; key_idx++){
-//            entry.push([data[i][col_names[key_idx]["title"]]]);
-//        }
-//        matrix.push(entry);
-//    }
-        var new_data = data['data'];
-        for (var i = 0; i < new_data.length; i++) {
-            var entry = [];
-            for (var key_idx = 0; key_idx < col_names.length; key_idx++) {
-                entry.push([new_data[i][col_names[key_idx]["title"]]]);
-//            entry.push([new_data[i][col_names[key_idx]]]);
-            }
-            matrix.push(entry);
-        }
-        var table = $("#" + name);
-        if (table[0].innerHTML != "") {
-            table.dataTable({"bRetrieve": true}).fnDestroy();
-        }
-        table.empty().dataTable(
-            {
-                "data": matrix,
-                "columns": col_names,
-                "destroy": true,
-                "sScrollX": "100%",
-                "bScrollCollapse": true,
-                "bPaginate": false,
-                "searching": false,
-                "scrollY": height,
-                "scrollCollapse": false
-            });
-    } else {
-        var table2 = $("#" + name);
-        if (table2[0].innerHTML != "") {
-            table2.dataTable({"bRetrieve": true}).fnDestroy();
-        }
-        table2.empty();
-    }
-    if (this.operator == "DataSet") {
-        var strings = this.children.filter(function (morph) {
-            return morph instanceof StringMorph
-        });
-        if (strings.length > 0) {
-            for (i = 0; i < strings.length; i++) {
-                title = strings[i];
-                title.color = 'white';
-                title.drawNew();
-            }
-
-        }
-    }
-//    mouse_auto();
-}
 function drawCircle(context, x, y, radius, color) {
     var current_color = context.fillStyle;
     context.fillStyle = color;
@@ -1349,7 +1276,7 @@ RunQueryMorph.prototype.mouseClickLeft = function () {
         }
         var result = roots[0].get_query();
         if (result) {
-            tableCreate("table_result", result.data);
+            ScriptMorph.prototype.createTable("table_result", result.data, null, this);
         }
     }
 };
@@ -2060,7 +1987,7 @@ BaseBlockMorph.prototype.mouseClickLeft = function () {
         textbox.setText("Relation Algebra Expression:");
     }
     var result = this.get_query();
-    tableCreate("table_data", result, this.operator);
+    ScriptMorph.prototype.createTable("table_data", result, this.operator, this);
 };
 BaseBlockMorph.prototype.getChildBlocks = function () {
     return this.children.filter(function (child) {
