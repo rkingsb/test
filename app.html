@@ -66,10 +66,69 @@
         };
     </script>
 </head>
-<body id='body' style="margin: 0; position: absolute;">
+<body id='body'>
+
 <canvas id="world" tabindex="1" style="float:left;outline: none;-webkit-tap-highlight-color: rgba(255, 255, 255, 0);">
     <p>Your browser doesn't support canvas. Upgrade your browser or use Google Chrome.</p>
 </canvas>
+
+<div id="data-tables-wrapper">
+    <div id="query-result-wrapper">
+        <div class="table-header query-result-wrapper">
+            <i class="fa fa-database"></i>
+            Query Result <span class="count"></span>
+            <i class="fa fa-external-link open-table-icon icons" title="Open table"></i>
+            <i class="fa fa-bar-chart chart-icon open-chart-icon icons" title="Open chart"></i>
+        </div>
+        <div id="query-result-container" class="result-container"></div>
+    </div>
+
+    <hr>
+
+    <div id="node-result-wrapper">
+        <div class="table-header node-result-wrapper">
+            <i class="fa fa-database"></i>
+            Node Result <span class="count"></span>
+            <i class="fa fa-external-link open-table-icon icons" title="Open table"></i>
+            <i class="fa fa-bar-chart chart-icon open-chart-icon icons" title="Open chart"></i>
+            <i class="fa fa-plus-square-o chart-icon add-row-icon icons" title="Add row"></i>
+        </div>
+        <div id="node-result-container" class="result-container"></div>
+    </div>
+
+    <div class="chart-modal">
+        <input type="hidden" class="modal-data-type" value="">
+        <select class="chart-type">
+            <option value="" selected disabled>Select chart type...</option>
+            <option value="Area" data-xtype="string" data-ytype="number">Area</option>
+            <option value="Bar" data-xtype="string" data-ytype="number">Bar</option>
+            <option value="Column" data-xtype="string" data-ytype="number">Column</option>
+            <!--<option value="Distribution">Distribution</option>-->
+            <option value="Histogram" data-xtype="string" data-ytype="number">Histogram</option>
+            <option value="Line" data-xtype="string" data-ytype="number">Line</option>
+            <option value="Pie" data-xtype="string" data-ytype="">Pie</option>
+            <!--<option value="Scatter">Scatter</option>-->
+        </select>
+        <select class="xAxis-opts">
+            <option value="" selected disabled>Select X axis...</option>
+        </select>
+        <select class="yAxis-opts">
+            <option value="" selected disabled>Select Y axis...</option>
+        </select>
+        <button onclick="createChart('node')">Create Chart</button>
+        <div class="errorText"></div>
+        <hr>
+        <div id="chart-wrapper" class="chart-wrapper"></div>
+    </div>
+
+    <div id="query-grid-modal" class="modal"></div>
+    <div id="node-grid-modal" class="modal"></div>
+    <div id="add-row-modal" class="modal">
+        <table></table>
+        <input type="button" id="add-row-btn" value="Update Table">
+    </div>
+</div>
+
 <div id="data_tables" style="background-color:#EEEEEE;width:400px;height:100%;position: absolute;top: 0;right:-400px">
     <div style="text-align: center"><b>Query Result</b></div>
     <table id="table_result" style="height: 45%"></table>
@@ -77,6 +136,7 @@
     <div id='result_node' style="text-align: center;"><b>Node Result</b></div>
     <table id="table_data"></table>
 </div>
+
 <div id="parserSelect" style="display:none;">
     start
     = cond_or
@@ -162,6 +222,7 @@
     }
     }
 </div>
+
 <div id="parserProject" style="display: None;">
     start
     = multiple
@@ -173,6 +234,7 @@
     attribute
     = [ ]* attr:[0-9a-zA-Z]+ [ ]*{ return [attr.join("")]; }
 </div>
+
 <div id="parserRename" style="display: None;">
     start
     = multiple
@@ -194,5 +256,6 @@
     integer = digits:[0-9]+ { return parseInt(digits.join(""), 10); }
     attribute = alpha:[a-zA-Z0-9]+ {return alpha.join("");}
 </div>
+
 </body>
 </html>
