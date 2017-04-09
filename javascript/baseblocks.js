@@ -1540,6 +1540,7 @@ ScriptMorph.prototype.queryUpdate = function () {
     }, mouse_auto]);
 };
 ScriptMorph.prototype.createTable = function (name, data, operator, ele) {
+    console.log(this);
     var wrapper, queryJSON, nodeJSON;
     var datasData = data !== null ? data.data : false;
     var dataLen = datasData.length || 0;
@@ -1575,7 +1576,6 @@ ScriptMorph.prototype.createTable = function (name, data, operator, ele) {
             $.each(data.attributes, function (key, val) {
                 $('.chart-modal').find(".xAxis-opts, .yAxis-opts").append("<option class='temp-opt' value='" + val + "'>" + val + "</option>");
             });
-            console.log(queryChartData);
 
             // prepare table data
             queryJSON = this.prepareJson(data, false);
@@ -1856,13 +1856,19 @@ ScriptMorph.prototype.addGridRow = function (newGridRow, tableName) {
     });
 };
 ScriptMorph.prototype.removeGridRow = function (cell, tableName) {
+    console.log(this);
+    // select parent row of the clicked delete cell
     var row = $(cell).closest('tr');
+    // obj of existing row data (minus the delete cell)
     var rowdata = {};
+    // pop rowdata
     row.find('td').each(function () {
         if ($(this).data('title') !== "Delete") {
             rowdata[$(this).data('title')] = $(this).text();
         }
     });
+
+    // find the row to delete in ScriptMorph obj.data
     $.each(this.children, function (i, child) {
         removerow = false;
         if (child.data_set && child.data_set.name == tableName) {
@@ -1879,9 +1885,11 @@ ScriptMorph.prototype.removeGridRow = function (cell, tableName) {
                 }
             });
         }
+        // remove the row from obj
         if (removerow !== false) {
             child.data_set.data.splice(removerow, 1);
         }
+        // rerun query
         child.parent.queryUpdate();
         child.mouseClickLeft();
     });

@@ -45,7 +45,8 @@
         ga('send', 'pageview');
     </script>
 
-    <script type="text/javascript">
+    <script>
+        var queryChartData, nodeChartData;
         window.onload = function () {
 //    if(navigator.platform.startsWith('Win')){
 //        dataTableWidth += 5;
@@ -103,11 +104,9 @@
             <option value="Area" data-xtype="string" data-ytype="number">Area</option>
             <option value="Bar" data-xtype="string" data-ytype="number">Bar</option>
             <option value="Column" data-xtype="string" data-ytype="number">Column</option>
-            <!--<option value="Distribution">Distribution</option>-->
             <option value="Histogram" data-xtype="string" data-ytype="number">Histogram</option>
             <option value="Line" data-xtype="string" data-ytype="number">Line</option>
             <option value="Pie" data-xtype="string" data-ytype="">Pie</option>
-            <!--<option value="Scatter">Scatter</option>-->
         </select>
         <select class="xAxis-opts">
             <option value="" selected disabled>Select X axis...</option>

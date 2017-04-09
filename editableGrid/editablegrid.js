@@ -1958,7 +1958,7 @@ EditableGrid.prototype.sort = function (columnIndexOrName, descending, backOnFir
         if (parseInt(columnIndex, 10) !== -1) {
             columnIndex = this.getColumnIndex(columnIndexOrName);
             if (columnIndex < 0) {
-                console.error("[sort] Invalid column: " + columnIndexOrName);
+                //console.error("[sort] Invalid column: " + columnIndexOrName);
                 return false;
             }
         }
