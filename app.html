@@ -1,174 +1,198 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>DBSnap</title>
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-  ga('create', 'UA-55805638-1', 'auto');
-  ga('send', 'pageview');
-</script>
+    <link rel='stylesheet' href='jQuery/jquery-ui.min.css'>
+    <link rel="stylesheet" href="editableGrid/editablegrid.css">
+    <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/dbsnap.css">
 
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <link type='text/css' rel='stylesheet' href='javascript/DataTables-1.10.0/media/css/jquery.dataTables.min.css'/>
-    <script src="javascript/DataTables-1.10.0/media/js/jquery.js"></script>
-    <script src="javascript/DataTables-1.10.0/media/js/jquery.dataTables.min.js"></script>
-    <script type="application/javascript" src="javascript/peg-0.8.0.min.js"></script>
-    <script type="application/javascript" src="javascript/morphic.js"></script>
-    <script type="application/javascript" src="javascript/changeset.js"></script>
-    <script type="application/javascript" src="javascript/baseblocks.js"></script>
-    <script type="application/javascript" src="javascript/gui.js"></script>
-    <script type="application/javascript" src="javascript/tempParser.js"></script>
-    <script type="application/javascript" src="javascript/FileSaver.min.js"></script>
-<script type="text/javascript">
-window.onload = function () {
+    <script src="jQuery/external/jquery/jquery.js"></script>
+    <script src="jQuery/jquery-ui.min.js"></script>
+    <script src="https://www.google.com/jsapi"></script>
+    <script src="https://www.gstatic.com/charts/loader.js"></script>
+    <script src="editableGrid/editablegrid.js"></script>
+    <script src="editableGrid/editablegrid_renderers.js"></script>
+    <script src="editableGrid/editablegrid_editors.js"></script>
+    <script src="editableGrid/editablegrid_validators.js"></script>
+    <script src="editableGrid/editablegrid_utils.js"></script>
+    <script src="javascript/peg-0.8.0.min.js"></script>
+    <script src="javascript/morphic.js"></script>
+    <script src="javascript/changeset.js"></script>
+    <script src="javascript/baseblocks.js"></script>
+    <script src="javascript/gui.js"></script>
+    <script src="javascript/tempParser.js"></script>
+    <script src="javascript/FileSaver.min.js"></script>
+    <script src="javascript/charts.js"></script>
+
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r;
+            i[r] = i[r] || function () {
+                        (i[r].q = i[r].q || []).push(arguments)
+                    }, i[r].l = 1 * new Date();
+            a = s.createElement(o),
+                    m = s.getElementsByTagName(o)[0];
+            a.async = 1;
+            a.src = g;
+            m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+        ga('create', 'UA-55805638-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+    <script type="text/javascript">
+        window.onload = function () {
 //    if(navigator.platform.startsWith('Win')){
 //        dataTableWidth += 5;
 //        dataTableHeight += 10;
 //    }
 //    var jisonParser = generator.generate({moduleName: "calc"});
 //    console.log(parser.parse('LEVEL = "Senior"'));
-    parserSelect = PEG.buildParser($('#parserSelect').html());
-    parserProject = PEG.buildParser($('#parserProject').html());
-    parserRename = PEG.buildParser($('#parserRename').html());
-    var world = new WorldMorph( document.getElementById("world"));
-    world.worldCanvas.focus();
-    world.isDevMode = false;
-    new GuiMorph().startInWorld(world);
-    setInterval(function(){world.doOneCycle();}, 1);
-};
-</script>
+            parserSelect = PEG.buildParser($('#parserSelect').html());
+            parserProject = PEG.buildParser($('#parserProject').html());
+            parserRename = PEG.buildParser($('#parserRename').html());
+            var world = new WorldMorph(document.getElementById("world"));
+            world.worldCanvas.focus();
+            world.isDevMode = false;
+            new GuiMorph().startInWorld(world);
+            setInterval(function () {
+                world.doOneCycle();
+            }, 1);
+        };
+    </script>
 </head>
 <body id='body' style="margin: 0; position: absolute;">
-    <canvas id="world" tabindex="1" style="float:left;outline: none;-webkit-tap-highlight-color: rgba(255, 255, 255, 0);">
-        <p>Your browser doesn't support canvas. Upgrade your browser or use Google Chrome.</p>
-    </canvas>
-    <div id="data_tables" style="background-color:#EEEEEE;width:400px;height:100%;position: absolute;top: 0;right:-400px">
-        <div style="text-align: center"><b>Query Result</b></div>
-        <table id="table_result" style="height: 45%"></table>
-        <hr style="">
-        <div id='result_node' style="text-align: center;"><b>Node Result</b></div>
-        <table id="table_data"></table>
-    </div>
-    <div id="parserSelect" style="display:none;">
-        start
-  = cond_or
+<canvas id="world" tabindex="1" style="float:left;outline: none;-webkit-tap-highlight-color: rgba(255, 255, 255, 0);">
+    <p>Your browser doesn't support canvas. Upgrade your browser or use Google Chrome.</p>
+</canvas>
+<div id="data_tables" style="background-color:#EEEEEE;width:400px;height:100%;position: absolute;top: 0;right:-400px">
+    <div style="text-align: center"><b>Query Result</b></div>
+    <table id="table_result" style="height: 45%"></table>
+    <hr style="">
+    <div id='result_node' style="text-align: center;"><b>Node Result</b></div>
+    <table id="table_data"></table>
+</div>
+<div id="parserSelect" style="display:none;">
+    start
+    = cond_or
 
-cond_or
-  = left:cond_and [ ]+ "OR" [ ]+ right:cond_or {
+    cond_or
+    = left:cond_and [ ]+ "OR" [ ]+ right:cond_or {
     var temp = {}, i;
     temp['$or'] = [];
     if(left.hasOwnProperty('$and')){temp['$or'].push(left);}
     else{
-      if(left.hasOwnProperty('$or')){left = left['$or']}
-      for(i in left){
-        temp['$or'].push(left[i]);
-      }}
+    if(left.hasOwnProperty('$or')){left = left['$or']}
+    for(i in left){
+    temp['$or'].push(left[i]);
+    }}
     if(right.hasOwnProperty('$and')){temp['$or'].push(right);}
     else{
-      if(right.hasOwnProperty('$or')){right = right['$or']}
-      for(i in right){
-        temp['$or'].push(right[i]);
-      }}
+    if(right.hasOwnProperty('$or')){right = right['$or']}
+    for(i in right){
+    temp['$or'].push(right[i]);
+    }}
     return temp;
     }
-  / cond_and
+    / cond_and
 
-cond_and
-  = left:primary [ ]+ "AND" [ ]+ right:cond_and {
+    cond_and
+    = left:primary [ ]+ "AND" [ ]+ right:cond_and {
     var temp = {}, i;
     temp['$and'] = [];
     if(left.hasOwnProperty('$or')){temp['$and'].push(left);}
     else{
-      if(left.hasOwnProperty('$and')){left = left['$and']}
-      for(i in left){
-        temp['$and'].push(left[i]);
-      }}
+    if(left.hasOwnProperty('$and')){left = left['$and']}
+    for(i in left){
+    temp['$and'].push(left[i]);
+    }}
     if(right.hasOwnProperty('$or')){temp['$and'].push(right);}
     else{
-      if(right.hasOwnProperty('$and')){right = right['$and']}
-      for(i in right){
-        temp['$and'].push(right[i]);
-      }}
+    if(right.hasOwnProperty('$and')){right = right['$and']}
+    for(i in right){
+    temp['$and'].push(right[i]);
+    }}
     return temp;
     }
-  / primary
+    / primary
 
-primary
-  = comparison
-  / "(" expr:cond_or ")" { return expr; }
+    primary
+    = comparison
+    / "(" expr:cond_or ")" { return expr; }
 
-comparison = attr:attribute [ ]* op:op [ ]* val:value {
+    comparison = attr:attribute [ ]* op:op [ ]* val:value {
     var t = {};
     attr = attr.toUpperCase();
     t[attr] = {};
     t[attr][op] = val;
     return [t];}
 
-attribute = alpha:[0-9a-zA-Z]+ {return alpha.join("");}
-value
+    attribute = alpha:[0-9a-zA-Z]+ {return alpha.join("");}
+    value
     = str1
     / str2
     / num
 
-str1 = '"' alpha:[a-zA-Z0-9 !#$%*()-_+=;:\[\]<>,./?]+ '"' {return alpha.join("");}
-str2 = "'" alpha:[a-zA-Z0-9 !#$%*()-_+=;:\[\]<>,./?]+ "'" {return alpha.join("");}
-num = int:[0-9]+ {return parseInt(int.join(""), 10)}
+    str1 = '"' alpha:[a-zA-Z0-9 !#$%*()-_+=;:\[\]<>,./?]+ '"' {return alpha.join("");}
+    str2 = "'" alpha:[a-zA-Z0-9 !#$%*()-_+=;:\[\]<>,./?]+ "'" {return alpha.join("");}
+    num = int:[0-9]+ {return parseInt(int.join(""), 10)}
 
-op = operator:[<=>]+ {
-operator = operator.join("");
-switch(operator){
-  case '<':
+    op = operator:[<=>]+ {
+    operator = operator.join("");
+    switch(operator){
+    case '<':
     return '$lt';
-  case '<=':
+    case '<=':
     return '$lte';
-  case '=':
+    case '=':
     return '$eq';
-  case '<>':
+    case '<>':
     return '$ne';
-  case '>=':
+    case '>=':
     return '$gte';
-  case '>':
+    case '>':
     return '$gt';
-  default:
+    default:
     return '$eq';
-}
-}
-    </div>
+    }
+    }
+</div>
 <div id="parserProject" style="display: None;">
-start
+    start
     = multiple
 
-multiple
+    multiple
     = left:attribute [, ]* right:multiple { return left.concat(right); }
     / attribute
 
-attribute
+    attribute
     = [ ]* attr:[0-9a-zA-Z]+ [ ]*{ return [attr.join("")]; }
 </div>
 <div id="parserRename" style="display: None;">
-start
+    start
     = multiple
 
-multiple
+    multiple
     = left:rename [, ]+ right:multiple {
-left.push.apply(left, right);
-return left}
+    left.push.apply(left, right);
+    return left}
     /rename
 
-rename
+    rename
     = left:value [ ]+ right:attribute { return [[left, right]]; }
     / value
 
-value
+    value
     = integer
     / attribute
 
-integer = digits:[0-9]+ { return parseInt(digits.join(""), 10); }
-attribute = alpha:[a-zA-Z0-9]+ {return alpha.join("");}
+    integer = digits:[0-9]+ { return parseInt(digits.join(""), 10); }
+    attribute = alpha:[a-zA-Z0-9]+ {return alpha.join("");}
 </div>
 </body>
 </html>
