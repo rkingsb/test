@@ -1846,17 +1846,30 @@ ScriptMorph.prototype.prepareJson = function (data, isEditable) {
     return {"metadata": fields, "data": rows};
 
 };
-ScriptMorph.prototype.addGridRow = function (newGridRow, tableName) {
-    $.each(this.children, function (i, child) {
-        if (child.data_set && child.data_set.name == tableName) {
-            child.data_set.data.push(newGridRow);
+ScriptMorph.prototype.addGridRow = function (newRow, tblName) {
+    // check newRow content
+    var err = false;
+    $.each(newRow, function(key, val){
+        console.log([key, val]);
+        if(val == "") {
+            err = true;
         }
-        child.parent.queryUpdate();
-        child.mouseClickLeft();
     });
+    if(!err) {
+        var affectedChild = false;
+        $.each(this.children, function (i, child) {
+            if (child.data_set && child.data_set.name == tblName) {
+                child.data_set.data.push(newRow);
+                affectedChild = child;
+            }
+        });
+        if (affectedChild) {
+            affectedChild.parent.queryUpdate();
+            affectedChild.mouseClickLeft();
+        }
+    }
 };
 ScriptMorph.prototype.removeGridRow = function (cell, tableName) {
-    console.log(this);
     // select parent row of the clicked delete cell
     var row = $(cell).closest('tr');
     // obj of existing row data (minus the delete cell)
