@@ -20,6 +20,7 @@ body {
     padding: 4px;
 }
 
+
 .table-header {
     font-size: 18px;
     font-weight: bold;
@@ -41,12 +42,22 @@ body {
     color: royalblue;
 }
 
+.download-button{
+    background-color: lightgray;
+    border: solid dimgray thin;
+    border-radius: 5px;
+    padding: 5px 30px;
+    width: 100%;
+
+
+}
+
 .chart-wrapper {
     height: 90%;
 }
 
 .result-container {
-    height: calc(50vh - 34px);
+    height: calc(50vh - 46px);
     overflow: auto;
 }
 
@@ -113,3 +124,4 @@ body {
 .chart-modal{
     overflow: hidden !important;
 }
+

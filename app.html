@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="css/dbsnap.css">
 
+
     <script src="jQuery/external/jquery/jquery.js"></script>
     <script src="jQuery/jquery-ui.min.js"></script>
     <script src="https://www.google.com/jsapi"></script>
@@ -74,6 +75,7 @@
 </canvas>
 
 <div id="data-tables-wrapper">
+    <button class="download-button" onclick="download_csv()">Download CSV</button>
     <div id="query-result-wrapper">
         <div class="table-header query-result-wrapper">
             <i class="fa fa-database"></i>
@@ -137,6 +139,7 @@
     <div id='result_node' style="text-align: center;"><b>Node Result</b></div>
     <table id="table_data"></table>
 </div>
+
 
 <div id="parserSelect" style="display:none;">
     start
@@ -257,6 +260,7 @@
     integer = digits:[0-9]+ { return parseInt(digits.join(""), 10); }
     attribute = alpha:[a-zA-Z0-9]+ {return alpha.join("");}
 </div>
+
 
 </body>
 </html>

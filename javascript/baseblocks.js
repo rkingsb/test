@@ -2384,10 +2384,53 @@ OperatorMorph.prototype.attachPoints = function () {
     }
     return points;
 };
+
+var csv_data = [];
+
+//function check_commas(str){
+    // check for commma
+  //  if(comma){
+     //   return '"' + str + '"';
+ //   }
+  //  return str;
+//}
+
+//function update_file(sql, some, anoth){
+function update_content (row_text){
+    //var time = new Date();
+
+    //var string = time + ',' + check_commas(sql) + ',' + check_commas(some)
+
+// update csv with new row
+    var new_row = row_text;
+    csv_data.push(new_row);
+    console.log(csv_data);
+
+}
+
+function download_csv(){
+    var downloadlink;
+    var prepared_csv = csv_data.join("\r\n");
+    var csvfile = new Blob([prepared_csv], {type:"text/csv"});
+    downloadlink = document.createElement('a');
+    downloadlink.download = "dbSnapData.csv";
+    downloadlink.href = window.URL.createObjectURL(csvfile);
+    downloadlink.style.display = 'none';
+    document.body.appendChild(downloadlink);
+    downloadlink.click();
+}
+
 OperatorMorph.prototype.snap = function () {
-    var target = this.closestAttachTarget(), script = this.parentThatIsA(ScriptMorph), next, offset_y, affected;
+
+
+    update_content("A,B,C");
+   // update_content();
+
+   var target = this.closestAttachTarget(), script = this.parentThatIsA(ScriptMorph), next, offset_y, affected;
+
     script.clearDropHistory();
     script.lastDroppedBlock = this;
+
     if (target === null) {
         return;
     }
@@ -2402,7 +2445,9 @@ OperatorMorph.prototype.snap = function () {
     else if (target.source_loc.loc === 'bottom') {
         this.nextBlocks(target.element);
     }
+
 };
+
 OperatorMorph.prototype.fixLayout = function () {
     console.log(this + 'fixLayout');
     var input = detect(this.children, function (child) {
