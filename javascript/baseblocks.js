@@ -98,6 +98,7 @@ function drawEqTriangle(context, x1, y1, x2, y2, color) {
 var query_operators = {};
 
 function parseSelect0(string) {
+
     var operation = string.split(' ');
     switch (operation[1]) {
         case '<':
@@ -2389,20 +2390,22 @@ var csv_data = [];
 
 //function check_commas(str){
     // check for commma
-  //  if(comma){
-     //   return '"' + str + '"';
- //   }
-  //  return str;
-//}
+  //if(','){
+       // return '"' + str + '"';
+  // }
+  // }
+var time = new Date();
 
+
+
+
+//var string = time + ',' + check_commas();
 //function update_file(sql, some, anoth){
-function update_content (row_text){
-    //var time = new Date();
+function update_content (time, row_text){
 
-    //var string = time + ',' + check_commas(sql) + ',' + check_commas(some)
 
 // update csv with new row
-    var new_row = row_text;
+    var new_row =time +","+ row_text;
     csv_data.push(new_row);
     console.log(csv_data);
 
@@ -2421,12 +2424,12 @@ function download_csv(){
 }
 
 OperatorMorph.prototype.snap = function () {
-
-
-    update_content("A,B,C");
+    update_content(time, this.operator);
    // update_content();
 
+console.log(this.operator);
    var target = this.closestAttachTarget(), script = this.parentThatIsA(ScriptMorph), next, offset_y, affected;
+
 
     script.clearDropHistory();
     script.lastDroppedBlock = this;

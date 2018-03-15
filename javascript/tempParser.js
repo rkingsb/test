@@ -71,33 +71,66 @@
  recoverable: (boolean: TRUE when the parser has a error recovery rule available for this particular error)
  }
  */
-var parser = (function(){
-    var o=function(k,v,o,l){for(o=o||{},l=k.length;l--;o[k[l]]=v);return o},$V0=[1,3],$V1=[1,4],$V2=[1,5],$V3=[1,6],$V4=[1,8],$V5=[1,9],$V6=[1,10],$V7=[5,7,8,9,10];
-    var parser = {trace: function trace() { },
+var parser = (function () {
+    var o = function (k, v, o, l) {
+            for (o = o || {}, l = k.length; l--; o[k[l]] = v) ;
+            return o
+        }, $V0 = [1, 3], $V1 = [1, 4], $V2 = [1, 5], $V3 = [1, 6], $V4 = [1, 8], $V5 = [1, 9], $V6 = [1, 10],
+        $V7 = [5, 7, 8, 9, 10];
+    var parser = {
+        trace: function trace() {
+        },
         yy: {},
-        symbols_: {"error":2,"expressions":3,"e":4,"EOF":5,"(":6,")":7,"AND":8,"OR":9,"OPERATOR":10,"ATTRIBUTE":11,"NUMBER":12,"STRING":13,"$accept":0,"$end":1},
-        terminals_: {2:"error",5:"EOF",6:"(",7:")",8:"AND",9:"OR",10:"OPERATOR",11:"ATTRIBUTE",12:"NUMBER",13:"STRING"},
-        productions_: [0,[3,2],[4,3],[4,3],[4,3],[4,3],[4,1],[4,1],[4,1]],
+        symbols_: {
+            "error": 2,
+            "expressions": 3,
+            "e": 4,
+            "EOF": 5,
+            "(": 6,
+            ")": 7,
+            "AND": 8,
+            "OR": 9,
+            "OPERATOR": 10,
+            "ATTRIBUTE": 11,
+            "NUMBER": 12,
+            "STRING": 13,
+            "$accept": 0,
+            "$end": 1
+        },
+        terminals_: {
+            2: "error",
+            5: "EOF",
+            6: "(",
+            7: ")",
+            8: "AND",
+            9: "OR",
+            10: "OPERATOR",
+            11: "ATTRIBUTE",
+            12: "NUMBER",
+            13: "STRING"
+        },
+        productions_: [0, [3, 2], [4, 3], [4, 3], [4, 3], [4, 3], [4, 1], [4, 1], [4, 1]],
         performAction: function anonymous(yytext, yyleng, yylineno, yy, yystate /* action[1] */, $$ /* vstack */, _$ /* lstack */) {
             /* this == yyval */
-
+            console.log(yy);
             var $0 = $$.length - 1;
             switch (yystate) {
                 case 1:
-                    typeof console !== 'undefined' ? console.log($$[$0-1]) : print($$[$0-1]);
-                    return $$[$0-1];
+                    console.log(console);
+                    typeof console !== 'undefined' ? console.log($$[$0 - 1]) : print($$[$0 - 1]);
+                    return $$[$0 - 1];
                     break;
                 case 2:
-                    this.$ = $$[$0-1];
+                    this.$ = $$[$0 - 1];
                     break;
                 case 3:
-                    this.$ = ['AND', $$[$0-2], $$[$0]]
+                    this.$ = ['AND', $$[$0 - 2], $$[$0]]
                     break;
                 case 4:
-                    this.$ = ['OR', $$[$0-2], $$[$0]]
+                    this.$ = ['OR', $$[$0 - 2], $$[$0]]
                     break;
                 case 5:
-                    this.$ = ['CONDITION', $$[$0-2], $$[$0-1], $$[$0]]
+                    this.$ = ['CONDITION', $$[$0 - 2], $$[$0 - 1], $$[$0]]
                     break;
                 case 6:
                     this.$ = ['ATTRIBUTE', yytext]
@@ -106,12 +139,29 @@ var parser = (function(){
                     this.$ = ['NUMBER', Number(yytext)];
                     break;
                 case 8:
-                    this.$ = ['STRING', yytext.substring(1, yytext.length-1)];
+                    this.$ = ['STRING', yytext.substring(1, yytext.length - 1)];
                     break;
             }
         },
-        table: [{3:1,4:2,6:$V0,11:$V1,12:$V2,13:$V3},{1:[3]},{5:[1,7],8:$V4,9:$V5,10:$V6},{4:11,6:$V0,11:$V1,12:$V2,13:$V3},o($V7,[2,6]),o($V7,[2,7]),o($V7,[2,8]),{1:[2,1]},{4:12,6:$V0,11:$V1,12:$V2,13:$V3},{4:13,6:$V0,11:$V1,12:$V2,13:$V3},{4:14,6:$V0,11:$V1,12:$V2,13:$V3},{7:[1,15],8:$V4,9:$V5,10:$V6},o([5,7,8,9],[2,3],{10:$V6}),o([5,7,9],[2,4],{8:$V4,10:$V6}),o($V7,[2,5]),o($V7,[2,2])],
-        defaultActions: {7:[2,1]},
+        table: [{3: 1, 4: 2, 6: $V0, 11: $V1, 12: $V2, 13: $V3}, {1: [3]}, {5: [1, 7], 8: $V4, 9: $V5, 10: $V6}, {
+            4: 11,
+            6: $V0,
+            11: $V1,
+            12: $V2,
+            13: $V3
+        }, o($V7, [2, 6]), o($V7, [2, 7]), o($V7, [2, 8]), {1: [2, 1]}, {
+            4: 12,
+            6: $V0,
+            11: $V1,
+            12: $V2,
+            13: $V3
+        }, {4: 13, 6: $V0, 11: $V1, 12: $V2, 13: $V3}, {4: 14, 6: $V0, 11: $V1, 12: $V2, 13: $V3}, {
+            7: [1, 15],
+            8: $V4,
+            9: $V5,
+            10: $V6
+        }, o([5, 7, 8, 9], [2, 3], {10: $V6}), o([5, 7, 9], [2, 4], {8: $V4, 10: $V6}), o($V7, [2, 5]), o($V7, [2, 2])],
+        defaultActions: {7: [2, 1]},
         parseError: function parseError(str, hash) {
             if (hash.recoverable) {
                 this.trace(str);
@@ -120,10 +170,11 @@ var parser = (function(){
             }
         },
         parse: function parse(input) {
-            var self = this, stack = [0], tstack = [], vstack = [null], lstack = [], table = this.table, yytext = '', yylineno = 0, yyleng = 0, recovering = 0, TERROR = 2, EOF = 1;
+            var self = this, stack = [0], tstack = [], vstack = [null], lstack = [], table = this.table, yytext = '',
+                yylineno = 0, yyleng = 0, recovering = 0, TERROR = 2, EOF = 1;
             var args = lstack.slice.call(arguments, 1);
             var lexer = Object.create(this.lexer);
-            var sharedState = { yy: {} };
+            var sharedState = {yy: {}};
             for (var k in this.yy) {
                 if (Object.prototype.hasOwnProperty.call(this.yy, k)) {
                     sharedState.yy[k] = this.yy[k];
@@ -143,11 +194,13 @@ var parser = (function(){
             } else {
                 this.parseError = Object.getPrototypeOf(this).parseError;
             }
+
             function popStack(n) {
                 stack.length = stack.length - 2 * n;
                 vstack.length = vstack.length - n;
                 lstack.length = lstack.length - n;
             }
+
             _token_stack:
                 function lex() {
                     var token;
@@ -255,14 +308,15 @@ var parser = (function(){
                 }
             }
             return true;
-        }};
+        }
+    };
     /* generated by jison-lex 0.3.4 */
-    var lexer = (function(){
+    var lexer = (function () {
         var lexer = ({
 
-            EOF:1,
+            EOF: 1,
 
-            parseError:function parseError(str, hash) {
+            parseError: function parseError(str, hash) {
                 if (this.yy.parser) {
                     this.yy.parser.parseError(str, hash);
                 } else {
@@ -271,7 +325,7 @@ var parser = (function(){
             },
 
 // resets the lexer, sets new input
-            setInput:function (input, yy) {
+            setInput: function (input, yy) {
                 this.yy = yy || this.yy || {};
                 this._input = input;
                 this._more = this._backtrack = this.done = false;
@@ -285,14 +339,14 @@ var parser = (function(){
                     last_column: 0
                 };
                 if (this.options.ranges) {
-                    this.yylloc.range = [0,0];
+                    this.yylloc.range = [0, 0];
                 }
                 this.offset = 0;
                 return this;
             },
 
 // consumes and returns one char from the input
-            input:function () {
+            input: function () {
                 var ch = this._input[0];
                 this.yytext += ch;
                 this.yyleng++;
@@ -315,7 +369,7 @@ var parser = (function(){
             },
 
 // unshifts one char (or a string) into the input
-            unput:function (ch) {
+            unput: function (ch) {
                 var len = ch.length;
                 var lines = ch.split(/(?:\r\n?|\n)/g);
 
@@ -350,13 +404,13 @@ var parser = (function(){
             },
 
 // When called from action, caches matched text and appends it on next action
-            more:function () {
+            more: function () {
                 this._more = true;
                 return this;
             },
 
 // When called from action, signals the lexer that this rule fails to match the input, so the next matching rule (regex) should be tested instead.
-            reject:function () {
+            reject: function () {
                 if (this.options.backtrack_lexer) {
                     this._backtrack = true;
                 } else {
@@ -371,34 +425,34 @@ var parser = (function(){
             },
 
 // retain first n characters of the match
-            less:function (n) {
+            less: function (n) {
                 this.unput(this.match.slice(n));
             },
 
 // displays already matched input, i.e. for error messages
-            pastInput:function () {
+            pastInput: function () {
                 var past = this.matched.substr(0, this.matched.length - this.match.length);
-                return (past.length > 20 ? '...':'') + past.substr(-20).replace(/\n/g, "");
+                return (past.length > 20 ? '...' : '') + past.substr(-20).replace(/\n/g, "");
             },
 
 // displays upcoming input, i.e. for error messages
-            upcomingInput:function () {
+            upcomingInput: function () {
                 var next = this.match;
                 if (next.length < 20) {
-                    next += this._input.substr(0, 20-next.length);
+                    next += this._input.substr(0, 20 - next.length);
                 }
-                return (next.substr(0,20) + (next.length > 20 ? '...' : '')).replace(/\n/g, "");
+                return (next.substr(0, 20) + (next.length > 20 ? '...' : '')).replace(/\n/g, "");
             },
 
 // displays the character position where the lexing error occurred, i.e. for error messages
-            showPosition:function () {
+            showPosition: function () {
                 var pre = this.pastInput();
                 var c = new Array(pre.length + 1).join("-");
                 return pre + this.upcomingInput() + "\n" + c + "^";
             },
 
 // test the lexed token: return FALSE when not a match, otherwise return token
-            test_match:function (match, indexed_rule) {
+            test_match: function (match, indexed_rule) {
                 var token,
                     lines,
                     backup;
@@ -470,7 +524,7 @@ var parser = (function(){
             },
 
 // return next match in input
-            next:function () {
+            next: function () {
                 if (this.done) {
                     return this.EOF;
                 }
@@ -528,7 +582,7 @@ var parser = (function(){
             },
 
 // return next match that has a token
-            lex:function lex() {
+            lex: function lex() {
                 var r = this.next();
                 if (r) {
                     return r;
@@ -538,12 +592,12 @@ var parser = (function(){
             },
 
 // activates a new lexer condition state (pushes the new lexer condition state onto the condition stack)
-            begin:function begin(condition) {
+            begin: function begin(condition) {
                 this.conditionStack.push(condition);
             },
 
 // pop the previously active lexer condition state off the condition stack
-            popState:function popState() {
+            popState: function popState() {
                 var n = this.conditionStack.length - 1;
                 if (n > 0) {
                     return this.conditionStack.pop();
@@ -553,7 +607,7 @@ var parser = (function(){
             },
 
 // produce the lexer rule set which is active for the currently active lexer condition state
-            _currentRules:function _currentRules() {
+            _currentRules: function _currentRules() {
                 if (this.conditionStack.length && this.conditionStack[this.conditionStack.length - 1]) {
                     return this.conditions[this.conditionStack[this.conditionStack.length - 1]].rules;
                 } else {
@@ -562,7 +616,7 @@ var parser = (function(){
             },
 
 // return the currently active lexer condition state; when an index argument is provided it produces the N-th previous condition state, if available
-            topState:function topState(n) {
+            topState: function topState(n) {
                 n = this.conditionStack.length - 1 - Math.abs(n || 0);
                 if (n >= 0) {
                     return this.conditionStack[n];
@@ -572,66 +626,91 @@ var parser = (function(){
             },
 
 // alias for begin(condition)
-            pushState:function pushState(condition) {
+            pushState: function pushState(condition) {
                 this.begin(condition);
             },
 
 // return the number of states currently on the stack
-            stateStackSize:function stateStackSize() {
+            stateStackSize: function stateStackSize() {
                 return this.conditionStack.length;
             },
-            options: {"case-insensitive":true},
-            performAction: function anonymous(yy,yy_,$avoiding_name_collisions,YY_START) {
-                var YYSTATE=YY_START;
-                switch($avoiding_name_collisions) {
+            options: {"case-insensitive": true},
+            performAction: function anonymous(yy, yy_, $avoiding_name_collisions, YY_START) {
+                var YYSTATE = YY_START;
+                switch ($avoiding_name_collisions) {
                     case 0:/* skip whitespace */
                         break;
-                    case 1:return 8
+                    case 1:
+                        return 8
                         break;
-                    case 2:return 9
+                    case 2:
+                        return 9
                         break;
-                    case 3:return 12
+                    case 3:
+                        return 12
                         break;
-                    case 4:return 13
+                    case 4:
+                        return 13
                         break;
-                    case 5:return 13
+                    case 5:
+                        return 13
                         break;
-                    case 6:return 11
+                    case 6:
+                        return 11
                         break;
-                    case 7:return 10
+                    case 7:
+                        return 10
                         break;
-                    case 8:return 10
+                    case 8:
+                        return 10
                         break;
-                    case 9:return 10
+                    case 9:
+                        return 10
                         break;
-                    case 10:return 10
+                    case 10:
+                        return 10
                         break;
-                    case 11:return 10
+                    case 11:
+                        return 10
                         break;
-                    case 12:return 10
+                    case 12:
+                        return 10
                         break;
-                    case 13:return ','
+                    case 13:
+                        return ','
                         break;
-                    case 14:return 6
+                    case 14:
+                        return 6
                         break;
-                    case 15:return 7
+                    case 15:
+                        return 7
                         break;
-                    case 16:return 5
+                    case 16:
+                        return 5
                         break;
-                    case 17:return 'INVALID'
+                    case 17:
+                        return 'INVALID'
                         break;
                 }
             },
-            rules: [/^(?:\s+)/i,/^(?:AND\b)/i,/^(?:OR\b)/i,/^(?:[0-9]+(\.[0-9]+)?\b)/i,/^(?:"[\S\s]+")/i,/^(?:'([\S\s]+)')/i,/^(?:[a-zA-Z0-9]+)/i,/^(?:<>)/i,/^(?:<=)/i,/^(?:>=)/i,/^(?:<)/i,/^(?:=)/i,/^(?:>)/i,/^(?:,)/i,/^(?:\()/i,/^(?:\))/i,/^(?:$)/i,/^(?:.)/i],
-            conditions: {"INITIAL":{"rules":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17],"inclusive":true}}
+            rules: [/^(?:\s+)/i, /^(?:AND\b)/i, /^(?:OR\b)/i, /^(?:[0-9]+(\.[0-9]+)?\b)/i, /^(?:"[\S\s]+")/i, /^(?:'([\S\s]+)')/i, /^(?:[a-zA-Z0-9]+)/i, /^(?:<>)/i, /^(?:<=)/i, /^(?:>=)/i, /^(?:<)/i, /^(?:=)/i, /^(?:>)/i, /^(?:,)/i, /^(?:\()/i, /^(?:\))/i, /^(?:$)/i, /^(?:.)/i],
+            conditions: {
+                "INITIAL": {
+                    "rules": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17],
+                    "inclusive": true
+                }
+            }
         });
         return lexer;
     })();
     parser.lexer = lexer;
-    function Parser () {
+
+    function Parser() {
         this.yy = {};
     }
-    Parser.prototype = parser;parser.Parser = Parser;
+
+    Parser.prototype = parser;
+    parser.Parser = Parser;
     return new Parser;
 })();
 
@@ -639,10 +718,12 @@ var parser = (function(){
 if (typeof require !== 'undefined' && typeof exports !== 'undefined') {
     exports.parser = parser;
     exports.Parser = parser.Parser;
-    exports.parse = function () { return parser.parse.apply(parser, arguments); };
+    exports.parse = function () {
+        return parser.parse.apply(parser, arguments);
+    };
     exports.main = function commonjsMain(args) {
         if (!args[1]) {
-            console.log('Usage: '+args[0]+' FILE');
+            console.log('Usage: ' + args[0] + ' FILE');
             process.exit(1);
         }
         var source = require('fs').readFileSync(require('path').normalize(args[1]), "utf8");
