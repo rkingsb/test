@@ -112,11 +112,11 @@ var parser = (function () {
         productions_: [0, [3, 2], [4, 3], [4, 3], [4, 3], [4, 3], [4, 1], [4, 1], [4, 1]],
         performAction: function anonymous(yytext, yyleng, yylineno, yy, yystate /* action[1] */, $$ /* vstack */, _$ /* lstack */) {
             /* this == yyval */
-            console.log(yy);
+
             var $0 = $$.length - 1;
             switch (yystate) {
                 case 1:
-                    console.log(console);
+
                     typeof console !== 'undefined' ? console.log($$[$0 - 1]) : print($$[$0 - 1]);
                     return $$[$0 - 1];
                     break;

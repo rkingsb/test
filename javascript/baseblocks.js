@@ -1481,7 +1481,7 @@ ScriptMorph.prototype.wantsDropOf = function (morph) {
     return morph instanceof BaseBlockMorph;
 };
 ScriptMorph.prototype.reactToDropOf = function (droppedMorph, hand) {
-    console.log(this + ':reactToDropOf:' + droppedMorph);
+
     droppedMorph.snap();
     //if (droppedMorph instanceof BaseBlockMorph){droppedMorph.snap(hand)}
     this.adjustBounds();
@@ -2388,26 +2388,19 @@ OperatorMorph.prototype.attachPoints = function () {
 
 var csv_data = [];
 
-//function check_commas(str){
-    // check for commma
-  //if(','){
-       // return '"' + str + '"';
-  // }
-  // }
+
 var time = new Date();
 
 
 
 
-//var string = time + ',' + check_commas();
-//function update_file(sql, some, anoth){
 function update_content (time, row_text){
 
 
 // update csv with new row
     var new_row =time +","+ row_text;
     csv_data.push(new_row);
-    console.log(csv_data);
+
 
 }
 
@@ -2424,10 +2417,10 @@ function download_csv(){
 }
 
 OperatorMorph.prototype.snap = function () {
-    update_content(time, this.operator);
-   // update_content();
+    update_content(time, this.operator);// this updates the csv file whenever a operator block is moved to the QA- Alaura
 
-console.log(this.operator);
+
+
    var target = this.closestAttachTarget(), script = this.parentThatIsA(ScriptMorph), next, offset_y, affected;
 
 
