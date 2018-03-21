@@ -1949,6 +1949,7 @@ BaseBlockMorph.prototype.allAttachTargets = function (new_parent) {
     return answer;
 };
 BaseBlockMorph.prototype.closestAttachTarget = function (new_parent) {
+
     var target = new_parent || this.parent, dist, minDist = 1000, answer = null, threshold = 25;
     // assigns to ref all the attach points for this block
     var ref = this.attachPoints();
@@ -2386,43 +2387,14 @@ OperatorMorph.prototype.attachPoints = function () {
     return points;
 };
 
-var csv_data = [];
-
-
-var time = new Date();
 
 
 
-
-function update_content (time, row_text){
-
-
-// update csv with new row
-    var new_row =time +","+ row_text;
-    csv_data.push(new_row);
-
-
-}
-
-function download_csv(){
-    var downloadlink;
-    var prepared_csv = csv_data.join("\r\n");
-    var csvfile = new Blob([prepared_csv], {type:"text/csv"});
-    downloadlink = document.createElement('a');
-    downloadlink.download = "dbSnapData.csv";
-    downloadlink.href = window.URL.createObjectURL(csvfile);
-    downloadlink.style.display = 'none';
-    document.body.appendChild(downloadlink);
-    downloadlink.click();
-}
 
 OperatorMorph.prototype.snap = function () {
-    update_content(time, this.operator);// this updates the csv file whenever a operator block is moved to the QA- Alaura
-
 
 
    var target = this.closestAttachTarget(), script = this.parentThatIsA(ScriptMorph), next, offset_y, affected;
-
 
     script.clearDropHistory();
     script.lastDroppedBlock = this;
@@ -2545,6 +2517,7 @@ OperatorGroupByMorph.prototype.attachPoints = function () {
     return points;
 };
 OperatorGroupByMorph.prototype.snap = function () {
+
     var target = this.closestAttachTarget(), script = this.parentThatIsA(ScriptMorph), next, offset_y, affected;
     script.clearDropHistory();
     script.lastDroppedBlock = this;
@@ -2674,6 +2647,7 @@ OperatorRenameMorph.prototype.attachPoints = function () {
     return points;
 };
 OperatorRenameMorph.prototype.snap = function () {
+
     var target = this.closestAttachTarget(), script = this.parentThatIsA(ScriptMorph), next, offset_y, affected;
     script.clearDropHistory();
     script.lastDroppedBlock = this;
@@ -2794,6 +2768,7 @@ OperatorJoinMorph.prototype.attachPoints = function () {
     return points;
 };
 OperatorJoinMorph.prototype.snap = function () {
+
     var target = this.closestAttachTarget(), script = this.parentThatIsA(ScriptMorph);//, next, offset_y, affected;
     script.clearDropHistory();
     script.lastDroppedBlock = this;
@@ -2905,6 +2880,7 @@ OperatorUnionMorph.prototype.attachPoints = function () {
     return points;
 };
 OperatorUnionMorph.prototype.snap = function () {
+
     var target = this.closestAttachTarget(), script = this.parentThatIsA(ScriptMorph);//, next, offset_y, affected;
     script.clearDropHistory();
     script.lastDroppedBlock = this;
@@ -3075,6 +3051,7 @@ OperatorThetaJoinMorph.prototype.ctrl = function (aChar) {
     alert(aChar)
 };
 OperatorThetaJoinMorph.prototype.snap = function () {
+
     var target = this.closestAttachTarget(), script = this.parentThatIsA(ScriptMorph);//, next, offset_y, affected;
     script.clearDropHistory();
     script.lastDroppedBlock = this;
@@ -3170,7 +3147,7 @@ DataSetBlockMorph.prototype.attachPoints = function () {
     return points;
 };
 DataSetBlockMorph.prototype.snap = function () {
-    console.log(this + ':snap');
+    //console.log(this + ':snap');
 
     var target = this.closestAttachTarget(), script = this.parentThatIsA(ScriptMorph), next, offset_y, affected;
     script.clearDropHistory();
