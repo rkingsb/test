@@ -2356,6 +2356,8 @@ OperatorMorph.prototype.init = function (op_name, query, input, color) {
 
     this.get_children = children_operators[query];
 
+    this.wasConnected = false;// Austin S., for determining if Block was connected on last call to .snap()
+	this.lastParent = null;// Austin S., for logging the last parent this Block was connected to
 };
 OperatorMorph.prototype.drawNew = function () {
     console.log(this + ':drawNew');
@@ -2393,15 +2395,35 @@ OperatorMorph.prototype.attachPoints = function () {
 
 OperatorMorph.prototype.snap = function () {
 
+    //Alaura:  this updates the csv file whenever a operator block is moved to the QA, Select , project & groupby
 
    var target = this.closestAttachTarget(), script = this.parentThatIsA(ScriptMorph), next, offset_y, affected;
 
     script.clearDropHistory();
     script.lastDroppedBlock = this;
 
-    if (target === null) {
+    //Austin S. Reimplemented
+    if (target === null)
+    {
+    	if(this.wasConnected)
+		{
+			update_content(this.operator + "," + this.blockID + "," + "disconnected from" + "," + this.lastParent.operator + "," + this.lastParent.blockID);// Austin S.
+			this.wasConnected = false;// Austin S.
+			this.lastParent = null;// Austin S.
+		}
+		else
+		{
+			update_content(this.operator + "," + this.blockID + "," + "moved");//Alaura, Austin S: Changed this.data_set.name to this.operator
+		}
         return;
     }
+    else
+	{
+		update_content(this.operator  +","+ this.blockID + "," + "connected to" + "," + target.element.operator + "," + target.element.blockID)//Alaura, Austin S: Changed target.element.data_set.name to target.element.operator
+		this.wasConnected = true;// Austin S.
+		this.lastParent = target.element; //Austin S.
+	}
+
     clickSound();
     script.lastDropTarget = target;
     this.setTop(target.point.y - (target.source_loc.point.y - this.top()));
@@ -2487,6 +2509,9 @@ OperatorGroupByMorph.prototype.init = function (op_name, query, input, color, pa
     this.isTemplate = true;
     this.get_relalg = relalg_operators[query];
     this.get_query = query_operators[query];
+
+	this.wasConnected = false;// Austin S., for determining if Block was connected on last call to .snap()
+	this.lastParent = null;// Austin S., for logging the last parent this Block was connected to
 };
 OperatorGroupByMorph.prototype.drawNew = function () {
     console.log(this + ':drawNew');
@@ -2521,9 +2546,29 @@ OperatorGroupByMorph.prototype.snap = function () {
     var target = this.closestAttachTarget(), script = this.parentThatIsA(ScriptMorph), next, offset_y, affected;
     script.clearDropHistory();
     script.lastDroppedBlock = this;
-    if (target === null) {
-        return;
-    }
+
+    //Austin S. Reimplemented
+	if (target === null)
+	{
+		if(this.wasConnected)
+		{
+			update_content(this.operator + "," + this.blockID + "," + "disconnected from" + "," + this.lastParent.operator + "," + this.lastParent.blockID);// Austin S.
+			this.wasConnected = false;// Austin S.
+			this.lastParent = null;// Austin S.
+		}
+		else
+		{
+			update_content(this.operator + "," + this.blockID + "," + "moved");//Alaura, Austin S: Changed this.data_set.name to this.operator
+		}
+		return;
+	}
+	else
+	{
+		update_content(this.operator  +","+ this.blockID + "," + "connected to" + "," + target.element.operator + "," + target.element.blockID);//Alaura, Austin S: Changed target.element.data_set.name to target.element.operator
+		this.wasConnected = true;// Austin S.
+		this.lastParent = target.element; //Austin S.
+	}
+
     clickSound();
     script.lastDropTarget = target;
     this.setTop(target.point.y - (target.source_loc.point.y - this.top()));
@@ -2617,6 +2662,9 @@ OperatorRenameMorph.prototype.init = function (op_name, query, input, color, par
     this.isTemplate = true;
     this.get_relalg = relalg_operators[query];
     this.get_query = query_operators[query];
+
+	this.wasConnected = false;// Austin S., for determining if Block was connected on last call to .snap()
+	this.lastParent = null;// Austin S., for logging the last parent this Block was connected to
 };
 OperatorRenameMorph.prototype.drawNew = function () {
     console.log(this + ':drawNew');
@@ -2651,9 +2699,29 @@ OperatorRenameMorph.prototype.snap = function () {
     var target = this.closestAttachTarget(), script = this.parentThatIsA(ScriptMorph), next, offset_y, affected;
     script.clearDropHistory();
     script.lastDroppedBlock = this;
-    if (target === null) {
-        return;
-    }
+
+    //Austin S. Reimplemented
+	if (target === null)
+	{
+		if(this.wasConnected)
+		{
+			update_content(this.operator + "," + this.blockID + "," + "disconnected from" + "," + this.lastParent.operator + "," + this.lastParent.blockID);// Austin S.
+			this.wasConnected = false;// Austin S.
+			this.lastParent = null;// Austin S.
+		}
+		else
+		{
+			update_content(this.operator + "," + this.blockID + "," + "moved");//Alaura, Austin S: Changed this.data_set.name to this.operator
+		}
+		return;
+	}
+	else
+	{
+		update_content(this.operator  +","+ this.blockID + "," + "connected to" + "," + target.element.operator + "," + target.element.blockID);//Alaura, Austin S: Changed target.element.data_set.name to target.element.operator
+		this.wasConnected = true;// Austin S.
+		this.lastParent = target.element; //Austin S.
+	}
+
     clickSound();
     script.lastDropTarget = target;
     this.setTop(target.point.y - (target.source_loc.point.y - this.top()));
@@ -2721,6 +2789,9 @@ OperatorJoinMorph.prototype.init = function (name, color, query) {
     this.radius = 25;
     this.setExtent(new Point(200, 125));
     this.isTemplate = true;
+
+	this.wasConnected = false;// Austin S., for determining if Block was connected on last call to .snap()
+	this.lastParent = null;// Austin S., for logging the last parent this Block was connected to
 };
 OperatorJoinMorph.prototype.drawNew = function () {
     var context;
@@ -2772,9 +2843,50 @@ OperatorJoinMorph.prototype.snap = function () {
     var target = this.closestAttachTarget(), script = this.parentThatIsA(ScriptMorph);//, next, offset_y, affected;
     script.clearDropHistory();
     script.lastDroppedBlock = this;
-    if (target === null) {
+
+    //Austin S. Reimplemented
+    if (target === null)
+    {
+		if(this.wasConnected)
+		{
+			if(this.fillColor == "Black")
+			{
+				update_content("Cross_Product" + "," + this.blockID + "," + "disconnected from" + "," + this.lastParent.operator + "," + this.lastParent.blockID);// Austin S.
+			}
+			else
+			{
+				update_content(this.operator + "," + this.blockID + "," + "disconnected from" + "," + this.lastParent.operator + "," + this.lastParent.blockID);// Austin S.
+			}
+			this.wasConnected = false;// Austin S.
+			this.lastParent = null;// Austin S.
+		}
+		else
+		{
+			if(this.fillColor == "Black")
+			{
+				update_content("Cross_Product"  +","+ this.blockID + "," + "moved");
+			}
+			else
+			{
+				update_content(this.operator  +","+ this.blockID + "," + "moved");//Alaura, Austin S: Changed this.data_set.name to this.operator
+			}
+		}
         return;
     }
+    else
+	{
+		if(this.fillColor == "Black")
+		{
+			update_content("Cross_Product"  +","+ this.blockID + "," + "connected to" + "," + target.element.operator + "," + target.element.blockID);//Alaura, Austin S: Changed target.element.data_set.name to target.element.operator
+		}
+		else
+		{
+			update_content(this.operator  +","+ this.blockID + "," + "connected to" + "," + target.element.operator + "," + target.element.blockID);//Alaura, Austin S: Changed target.element.data_set.name to target.element.operator
+		}
+		this.wasConnected = true;// Austin S.
+		this.lastParent = target.element; //Austin S.
+	}
+
     clickSound();
     script.lastDropTarget = target;
     this.setTop(target.point.y - (target.source_loc.point.y - this.top()));
@@ -2833,6 +2945,9 @@ OperatorUnionMorph.prototype.init = function (name, color, query) {
     this.radius = 25;
     this.setExtent(new Point(200, 125));
     this.isTemplate = true;
+
+    this.wasConnected = false;// Austin S., for determining if Block was connected on last call to .snap()
+	this.lastParent = null;// Austin S., for logging the last parent this Block was connected to
 };
 OperatorUnionMorph.prototype.drawNew = function () {
     var context;
@@ -2884,9 +2999,42 @@ OperatorUnionMorph.prototype.snap = function () {
     var target = this.closestAttachTarget(), script = this.parentThatIsA(ScriptMorph);//, next, offset_y, affected;
     script.clearDropHistory();
     script.lastDroppedBlock = this;
-    if (target === null) {
+
+	//Austin S. Reimplemented
+    if (target === null)
+    {
+    	if(this.fillColor == "LightSeaGreen")
+		{
+			update_content("Difference"  +","+ this.blockID + "," + "moved");
+		}
+		else if(this.fillColor == "Chocolate")
+		{
+			update_content("Intersection"  +","+ this.blockID + "," + "moved");
+		}
+		else
+		{
+			update_content(this.operator +","+ this.blockID + "," + "moved");
+		}
         return;
     }
+    else
+	{
+		if(this.fillColor == "LightSeaGreen")
+		{
+			update_content("Difference"  +","+ this.blockID + "," + "connected to" + "," + target.element.operator + "," + target.element.blockID)//Alaura, Austin S: Changed target.element.data_set.name to target.element.operator
+		}
+		else if(this.fillColor == "Chocolate")
+		{
+			update_content("Intersection"  +","+ this.blockID + "," + "connected to" + "," + target.element.operator + "," + target.element.blockID)//Alaura, Austin S: Changed target.element.data_set.name to target.element.operator
+		}
+		else
+		{
+			update_content(this.operator +","+ this.blockID + "," + "connected to" + "," + target.element.operator + "," + target.element.blockID)//Alaura, Austin S: Changed target.element.data_set.name to target.element.operator
+		}
+		this.wasConnected = true;// Austin S.
+		this.lastParent = target.element; //Austin S.
+	}
+
     clickSound();
     script.lastDropTarget = target;
     this.setTop(target.point.y - (target.source_loc.point.y - this.top()));
@@ -2959,6 +3107,9 @@ OperatorThetaJoinMorph.prototype.init = function (name, params) {
     this.radius = 25;
     this.isTemplate = true;
     this.drawNew();
+
+	this.wasConnected = false;// Austin S., for determining if Block was connected on last call to .snap()
+	this.lastParent = null;// Austin S., for logging the last parent this Block was connected to
 };
 OperatorThetaJoinMorph.prototype.drawNew = function () {
     var context;
@@ -3055,10 +3206,30 @@ OperatorThetaJoinMorph.prototype.snap = function () {
     var target = this.closestAttachTarget(), script = this.parentThatIsA(ScriptMorph);//, next, offset_y, affected;
     script.clearDropHistory();
     script.lastDroppedBlock = this;
-    if (target === null) {
-        return;
-    }
-    clickSound();
+
+	//Austin S. Reimplemented
+	if (target === null)
+	{
+		if(this.wasConnected)
+		{
+			update_content(this.operator + "," + this.blockID + "," + "disconnected from" + "," + this.lastParent.operator + "," + this.lastParent.blockID);// Austin S.
+			this.wasConnected = false;// Austin S.
+			this.lastParent = null;// Austin S.
+		}
+		else
+		{
+			update_content(this.operator + "," + this.blockID + "," + "moved");//Alaura, Austin S: Changed this.data_set.name to this.operator
+		}
+		return;
+	}
+	else
+	{
+		update_content(this.operator  +","+ this.blockID + "," + "connected to" + "," + target.element.operator + "," + target.element.blockID);//Alaura, Austin S: Changed target.element.data_set.name to target.element.operator
+		this.wasConnected = true;// Austin S.
+		this.lastParent = target.element; //Austin S.
+	}
+
+	clickSound();
     script.lastDropTarget = target;
     this.setTop(target.point.y - (target.source_loc.point.y - this.top()));
     this.setLeft(target.point.x - (target.source_loc.point.x - this.left()));
@@ -3126,6 +3297,8 @@ DataSetBlockMorph.prototype.init = function (data, name, queryParent) {
     }
     this.add(block_name);
 
+	this.wasConnected = false;// Austin S., for determining if Block was connected on last call to .snap()
+	this.lastParent = null;// Austin S., for logging the last parent this Block was connected to
 };
 DataSetBlockMorph.prototype.drawNew = function () {
     var context;
@@ -3152,10 +3325,30 @@ DataSetBlockMorph.prototype.snap = function () {
     var target = this.closestAttachTarget(), script = this.parentThatIsA(ScriptMorph), next, offset_y, affected;
     script.clearDropHistory();
     script.lastDroppedBlock = this;
-    if (target === null) {
-        return;
-    }
-    clickSound();
+
+    //Austin S. Reimplemented
+	if (target === null)
+	{
+		if(this.wasConnected)
+		{
+			update_content(this.operator + "," + this.blockID + "," + "disconnected from" + "," + this.lastParent.operator + "," + this.lastParent.blockID);// Austin S.
+			this.wasConnected = false;// Austin S.
+			this.lastParent = null;// Austin S.
+		}
+		else
+		{
+			update_content(this.operator + "," + this.blockID + "," + "moved");//Alaura, Austin S: Changed this.data_set.name to this.operator
+		}
+		return;
+	}
+	else
+	{
+		update_content(this.operator  +","+ this.blockID + "," + "connected to" + "," + target.element.operator + "," + target.element.blockID);//Alaura, Austin S: Changed target.element.data_set.name to target.element.operator
+		this.wasConnected = true;// Austin S.
+		this.lastParent = target.element; //Austin S.
+	}
+
+	clickSound();
     console.log(this + ':snap:closestTarget=' + target);
     script.lastDropTarget = target;
     if (target.source_loc.loc === 'top') {
@@ -3216,7 +3409,7 @@ DataSetBlockMorph.prototype.get_query = function () {
 
 // Austin S.
 // Update Content feature reimplemented 9/4/2018
-/*
+
 var csv_data = [];
 var time = (new Date()).toLocaleDateString();//Alaura
 function update_content (row_text){//Alaura
@@ -3239,7 +3432,7 @@ function download_csv(){
     document.body.appendChild(downloadlink);
     downloadlink.click();
 }
-*/
+
 
 //start here
 

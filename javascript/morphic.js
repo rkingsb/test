@@ -9581,6 +9581,8 @@ HandMorph.prototype.processDoubleClick = function () {
     this.mouseButton = null;
 };
 
+var blockCounter = 0;//Yasin: This will be used to assign a unique blockID to each block instance
+
 HandMorph.prototype.processMouseMove = function (event) {
     var pos,
         posInDocument = getDocumentPositionOf(this.world.worldCanvas),
@@ -9620,6 +9622,7 @@ HandMorph.prototype.processMouseMove = function (event) {
                 morph.isDraggable = true;
                 this.grab(morph);
                 this.grabOrigin = this.morphToGrab.situation();
+				morph.blockID = blockCounter++; //Yasin: Assigning unique instance ID
             }
             if (morph) {
                 // if the mouse has left its fullBounds, center it
