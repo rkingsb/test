@@ -3214,6 +3214,33 @@ DataSetBlockMorph.prototype.get_query = function () {
 
 };
 
+// Austin S.
+// Update Content feature reimplemented 9/4/2018
+/*
+var csv_data = [];
+var time = (new Date()).toLocaleDateString();//Alaura
+function update_content (row_text){//Alaura
+
+
+// update csv with new row
+    var new_row = Date() +","+ row_text;
+    csv_data.push(new_row);
+
+
+}
+function download_csv(){
+    var downloadlink;
+    var prepared_csv = csv_data.join("\r\n");
+    var csvfile = new Blob([prepared_csv], {type:"text/csv"});
+    downloadlink = document.createElement('a');
+    downloadlink.download = "dbSnapData.csv";
+    downloadlink.href = window.URL.createObjectURL(csvfile);
+    downloadlink.style.display = 'none';
+    document.body.appendChild(downloadlink);
+    downloadlink.click();
+}
+*/
+
 //start here
 
 /*var ViewDataSetBlockMorph;
