@@ -3003,17 +3003,35 @@ OperatorUnionMorph.prototype.snap = function () {
 	//Austin S. Reimplemented
     if (target === null)
     {
-    	if(this.fillColor == "LightSeaGreen")
+    	if(this.wasConnected)
 		{
-			update_content("Difference"  +","+ this.blockID + "," + "moved");
-		}
-		else if(this.fillColor == "Chocolate")
-		{
-			update_content("Intersection"  +","+ this.blockID + "," + "moved");
+			if(this.fillColor == "LightSeaGreen")
+			{
+				update_content("Difference" + "," + this.blockID + "," + "disconnected from" + "," + this.lastParent.operator + "," + this.lastParent.blockID);// Austin S.
+			}
+			else if(this.fillColor == "Chocolate")
+			{
+				update_content("Intersection" + "," + this.blockID + "," + "disconnected from" + "," + this.lastParent.operator + "," + this.lastParent.blockID);// Austin S.
+			}
+			else
+			{
+				update_content(this.operator + "," + this.blockID + "," + "disconnected from" + "," + this.lastParent.operator + "," + this.lastParent.blockID);// Austin S.
+			}
 		}
 		else
 		{
-			update_content(this.operator +","+ this.blockID + "," + "moved");
+			if(this.fillColor == "LightSeaGreen")
+			{
+				update_content("Difference"  +","+ this.blockID + "," + "moved");
+			}
+			else if(this.fillColor == "Chocolate")
+			{
+				update_content("Intersection"  +","+ this.blockID + "," + "moved");
+			}
+			else
+			{
+				update_content(this.operator +","+ this.blockID + "," + "moved");
+			}
 		}
         return;
     }
