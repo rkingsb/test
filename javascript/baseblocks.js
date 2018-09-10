@@ -2462,6 +2462,12 @@ OperatorMorph.prototype.accept = function () {
 //    this.mouseClickLeft();
 };
 
+/*Austin S., for use of improved logging of disconnection later
+OperatorMorph.prototype.reactToGrabOf = function(aMorph) {
+    aMorph.isDisconnected = true;
+    aMorph.lastParent = this;
+};
+*/
 
 var OperatorGroupByMorph; // == CommandBlockMorph
 OperatorGroupByMorph.prototype = new BaseBlockMorph();
@@ -3348,6 +3354,7 @@ DataSetBlockMorph.prototype.init = function (data, name, queryParent) {
 	this.wasConnected = false;// Austin S., for determining if Block was connected on last call to .snap()
 	this.lastParent = null;// Austin S., for logging the last parent this Block was connected to
     this.isNew = true;// Austin S., for determining if Block came straight from the template, preventing subsequent "moved" logs
+    // this.isDisconnected = false; // Austin S., for implementation later for improved logging with disconnecting blocks.
 };
 DataSetBlockMorph.prototype.drawNew = function () {
     var context;
@@ -3374,7 +3381,14 @@ DataSetBlockMorph.prototype.snap = function () {
     var target = this.closestAttachTarget(), script = this.parentThatIsA(ScriptMorph), next, offset_y, affected;
     script.clearDropHistory();
     script.lastDroppedBlock = this;
-    //Austin S. Reimplemented
+    /*
+	if(this.isDisconnected)
+	{
+		update_content(this.operator + "," + this.blockID + "," + "disconnected from" + "," + this.lastParent.operator + "," + this.lastParent.blockID);// Austin S.
+        this.isDisconnected = false;
+	}
+	*/
+	//Austin S. Reimplemented
 	if (target === null)
 	{
 		if(this.wasConnected)
@@ -3460,9 +3474,15 @@ DataSetBlockMorph.prototype.get_query = function () {
 
 };
 
+/*
+Austin S., uncommenting this function serves merely as a dummy function. It allows the coder to toggle a breakpoint at the exact moment a Dataset Block is dropped.
+DataSetBlockMorph.prototype.justDropped = function () {
+    var breakPointThisLineForWatchingExecution;
+}
+*/
+
 // Austin S.
 // Update Content feature reimplemented 9/4/2018
-
 var csv_data = [];
 //var time = (new Date()).toLocaleDateString();//Alaura
 function update_content (row_text){//Alaura

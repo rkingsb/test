@@ -192,6 +192,7 @@ GuiMorph.prototype.createOperatorsMenu = function(){
     this.operatorsMenu = new ScrollFrameMorph();
     var myself = this;
     this.operatorsMenu.contents.reactToDropOf = function(droppedMorph, hand){
+		update_content(droppedMorph.operator + "," + droppedMorph.blockID + "," + "deleted"); //Austin S., logging for deletion of block
         droppedMorph.destroy();
         var script = myself.sandbox_script;
         script.queryUpdate();
