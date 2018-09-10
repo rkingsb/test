@@ -2418,8 +2418,8 @@ OperatorMorph.prototype.snap = function () {
 			{
 				update_content(this.operator + "," + this.blockID + "," + "moved");//Alaura, Austin S: Changed this.data_set.name to this.operator
 			}
-			this.isNew = false;// Austin S., prevents the next calls to .snap() from producing "moved" logs after the block initially moved from the template
 		}
+		this.isNew = false;// Austin S., prevents the next calls to .snap() from producing "moved" logs after the block initially moved from the template
         return;
     }
     else
@@ -2427,6 +2427,7 @@ OperatorMorph.prototype.snap = function () {
 		update_content(this.operator  +","+ this.blockID + "," + "connected to" + "," + target.element.operator + "," + target.element.blockID)//Alaura, Austin S: Changed target.element.data_set.name to target.element.operator
 		this.wasConnected = true;// Austin S.
 		this.lastParent = target.element; //Austin S.
+		this.isNew = false;// Austin S., prevents the next calls to .snap() from producing "moved" logs after the block initially moved from the template
 	}
 
     clickSound();
@@ -2568,8 +2569,8 @@ OperatorGroupByMorph.prototype.snap = function () {
 			{
 				update_content(this.operator + "," + this.blockID + "," + "moved");//Alaura, Austin S: Changed this.data_set.name to this.operator
 			}
-			this.isNew = false;// Austin S., prevents the next calls to .snap() from producing "moved" logs after the block initially moved from the template
 		}
+		this.isNew = false;// Austin S., prevents the next calls to .snap() from producing "moved" logs after the block initially moved from the template
 		return;
 	}
 	else
@@ -2577,6 +2578,7 @@ OperatorGroupByMorph.prototype.snap = function () {
 		update_content(this.operator  +","+ this.blockID + "," + "connected to" + "," + target.element.operator + "," + target.element.blockID);//Alaura, Austin S: Changed target.element.data_set.name to target.element.operator
 		this.wasConnected = true;// Austin S.
 		this.lastParent = target.element; //Austin S.
+		this.isNew = false;// Austin S., prevents the next calls to .snap() from producing "moved" logs after the block initially moved from the template
 	}
 
     clickSound();
@@ -2726,8 +2728,8 @@ OperatorRenameMorph.prototype.snap = function () {
 			{
 				update_content(this.operator + "," + this.blockID + "," + "moved");//Alaura, Austin S: Changed this.data_set.name to this.operator
 			}
-			this.isNew = false;// Austin S., prevents the next calls to .snap() from producing "moved" logs after the block initially moved from the template
 		}
+		this.isNew = false;// Austin S., prevents the next calls to .snap() from producing "moved" logs after the block initially moved from the template
 		return;
 	}
 	else
@@ -2735,6 +2737,7 @@ OperatorRenameMorph.prototype.snap = function () {
 		update_content(this.operator  +","+ this.blockID + "," + "connected to" + "," + target.element.operator + "," + target.element.blockID);//Alaura, Austin S: Changed target.element.data_set.name to target.element.operator
 		this.wasConnected = true;// Austin S.
 		this.lastParent = target.element; //Austin S.
+		this.isNew = false;// Austin S., prevents the next calls to .snap() from producing "moved" logs after the block initially moved from the template
 	}
 
     clickSound();
@@ -2886,8 +2889,8 @@ OperatorJoinMorph.prototype.snap = function () {
 			{
 				update_content(this.operator  +","+ this.blockID + "," + "moved");//Alaura, Austin S: Changed this.data_set.name to this.operator
 			}
-			this.isNew = false;// Austin S., prevents the next calls to .snap() from producing "moved" logs after the block initially moved from the template
 		}
+		this.isNew = false;// Austin S., prevents the next calls to .snap() from producing "moved" logs after the block initially moved from the template
         return;
     }
     else
@@ -2902,6 +2905,7 @@ OperatorJoinMorph.prototype.snap = function () {
 		}
 		this.wasConnected = true;// Austin S.
 		this.lastParent = target.element; //Austin S.
+		this.isNew = false;// Austin S., prevents the next calls to .snap() from producing "moved" logs after the block initially moved from the template
 	}
 
     clickSound();
@@ -3050,8 +3054,8 @@ OperatorUnionMorph.prototype.snap = function () {
 			{
 				update_content(this.operator +","+ this.blockID + "," + "moved");
 			}
-			this.isNew = false;// Austin S., prevents the next calls to .snap() from producing "moved" logs after the block initially moved from the template
 		}
+		this.isNew = false;// Austin S., prevents the next calls to .snap() from producing "moved" logs after the block initially moved from the template
         return;
     }
     else
@@ -3070,6 +3074,7 @@ OperatorUnionMorph.prototype.snap = function () {
 		}
 		this.wasConnected = true;// Austin S.
 		this.lastParent = target.element; //Austin S.
+		this.isNew = false;// Austin S., prevents the next calls to .snap() from producing "moved" logs after the block initially moved from the template
 	}
 
     clickSound();
@@ -3260,8 +3265,8 @@ OperatorThetaJoinMorph.prototype.snap = function () {
 			{
 				update_content(this.operator + "," + this.blockID + "," + "moved");//Alaura, Austin S: Changed this.data_set.name to this.operator
 			}
-			this.isNew = false;// Austin S., prevents the next calls to .snap() from producing "moved" logs after the block initially moved from the template
 		}
+		this.isNew = false;// Austin S., prevents the next calls to .snap() from producing "moved" logs after the block initially moved from the template
 		return;
 	}
 	else
@@ -3269,6 +3274,7 @@ OperatorThetaJoinMorph.prototype.snap = function () {
 		update_content(this.operator  +","+ this.blockID + "," + "connected to" + "," + target.element.operator + "," + target.element.blockID);//Alaura, Austin S: Changed target.element.data_set.name to target.element.operator
 		this.wasConnected = true;// Austin S.
 		this.lastParent = target.element; //Austin S.
+		this.isNew = false;// Austin S., prevents the next calls to .snap() from producing "moved" logs after the block initially moved from the template
 	}
 
 	clickSound();
@@ -3383,8 +3389,8 @@ DataSetBlockMorph.prototype.snap = function () {
             {
 				update_content(this.operator + "," + this.blockID + "," + "moved");//Alaura, Austin S: Changed this.data_set.name to this.operator
             }
-			this.isNew = false;// Austin S., prevents the next calls to .snap() from producing "moved" logs after the block initially moved from the template
 		}
+		this.isNew = false;// Austin S., prevents the next calls to .snap() from producing "moved" logs after the block initially moved from the template
 		return;
 	}
 	else
@@ -3392,6 +3398,7 @@ DataSetBlockMorph.prototype.snap = function () {
 		update_content(this.operator  +","+ this.blockID + "," + "connected to" + "," + target.element.operator + "," + target.element.blockID);//Alaura, Austin S: Changed target.element.data_set.name to target.element.operator
 		this.wasConnected = true;// Austin S.
 		this.lastParent = target.element; //Austin S.
+		this.isNew = false;// Austin S., prevents the next calls to .snap() from producing "moved" logs after the block initially moved from the template
 	}
 
 	clickSound();
@@ -3404,7 +3411,6 @@ DataSetBlockMorph.prototype.snap = function () {
         this.setLeft(target.point.x - 25);
         target.element.nextBlocks(this);
     }
-    this.isNew = false;
 };
 
 DataSetBlockMorph.prototype.get_relalg = function (viewIsChildren) {
