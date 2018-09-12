@@ -2356,7 +2356,7 @@ OperatorMorph.prototype.init = function (op_name, query, input, color) {
 
     this.get_children = children_operators[query];
 
-    this.wasConnected = false;// Austin S., for determining if Block was connected on last call to .snap()
+	this.isDisconnected = false;// Austin S., for use in the .snap() function, specifies whether the block was disconnected from the last parent of the block
 	this.lastParent = null;// Austin S., for logging the last parent this Block was connected to
 	this.isNew = true;// Austin S., for determining if Block came straight from the template, preventing subsequent "moved" logs
 };
@@ -2404,29 +2404,23 @@ OperatorMorph.prototype.snap = function () {
     script.lastDroppedBlock = this;
 
     //Austin S. Reimplemented
+	if(this.isDisconnected)
+	{
+		update_content(this.operator + "," + this.blockID + "," + "disconnected from" + "," + this.lastParent.operator + "," + this.lastParent.blockID);// Austin S.
+		this.isDisconnected = false; // Austin S.
+	}
     if (target === null)
     {
-    	if(this.wasConnected)
-		{
-			update_content(this.operator + "," + this.blockID + "," + "disconnected from" + "," + this.lastParent.operator + "," + this.lastParent.blockID);// Austin S.
-			this.wasConnected = false;// Austin S.
-			this.lastParent = null;// Austin S.
-		}
-		else
-		{
-			if(this.isNew)
-			{
-				update_content(this.operator + "," + this.blockID + "," + "moved");//Alaura, Austin S: Changed this.data_set.name to this.operator
-			}
-		}
+        if(this.isNew)
+        {
+            update_content(this.operator + "," + this.blockID + "," + "moved");//Alaura, Austin S: Changed this.data_set.name to this.operator
+        }
 		this.isNew = false;// Austin S., prevents the next calls to .snap() from producing "moved" logs after the block initially moved from the template
         return;
     }
     else
 	{
 		update_content(this.operator  +","+ this.blockID + "," + "connected to" + "," + target.element.operator + "," + target.element.blockID)//Alaura, Austin S: Changed target.element.data_set.name to target.element.operator
-		this.wasConnected = true;// Austin S.
-		this.lastParent = target.element; //Austin S.
 		this.isNew = false;// Austin S., prevents the next calls to .snap() from producing "moved" logs after the block initially moved from the template
 	}
 
@@ -2462,12 +2456,11 @@ OperatorMorph.prototype.accept = function () {
 //    this.mouseClickLeft();
 };
 
-/*Austin S., for use of improved logging of disconnection later
+//Austin S., this function is called for the parent block when a child block is being grabbed by the mouse
 OperatorMorph.prototype.reactToGrabOf = function(aMorph) {
     aMorph.isDisconnected = true;
     aMorph.lastParent = this;
 };
-*/
 
 var OperatorGroupByMorph; // == CommandBlockMorph
 OperatorGroupByMorph.prototype = new BaseBlockMorph();
@@ -2522,7 +2515,7 @@ OperatorGroupByMorph.prototype.init = function (op_name, query, input, color, pa
     this.get_relalg = relalg_operators[query];
     this.get_query = query_operators[query];
 
-	this.wasConnected = false;// Austin S., for determining if Block was connected on last call to .snap()
+	this.isDisconnected = false;// Austin S., for use in the .snap() function, specifies whether the block was disconnected from the last parent of the block
 	this.lastParent = null;// Austin S., for logging the last parent this Block was connected to
 	this.isNew = true;// Austin S., for determining if Block came straight from the template, preventing subsequent "moved" logs
 };
@@ -2560,30 +2553,24 @@ OperatorGroupByMorph.prototype.snap = function () {
     script.clearDropHistory();
     script.lastDroppedBlock = this;
 
-    //Austin S. Reimplemented
+	//Austin S. Reimplemented
+	if(this.isDisconnected)
+	{
+		update_content(this.operator + "," + this.blockID + "," + "disconnected from" + "," + this.lastParent.operator + "," + this.lastParent.blockID);// Austin S.
+		this.isDisconnected = false; // Austin S.
+	}
 	if (target === null)
 	{
-		if(this.wasConnected)
-		{
-			update_content(this.operator + "," + this.blockID + "," + "disconnected from" + "," + this.lastParent.operator + "," + this.lastParent.blockID);// Austin S.
-			this.wasConnected = false;// Austin S.
-			this.lastParent = null;// Austin S.
-		}
-		else
-		{
-			if(this.isNew)
-			{
-				update_content(this.operator + "," + this.blockID + "," + "moved");//Alaura, Austin S: Changed this.data_set.name to this.operator
-			}
-		}
+	    if(this.isNew)
+	    {
+	        update_content(this.operator + "," + this.blockID + "," + "moved");//Alaura, Austin S: Changed this.data_set.name to this.operator
+	    }
 		this.isNew = false;// Austin S., prevents the next calls to .snap() from producing "moved" logs after the block initially moved from the template
 		return;
 	}
 	else
 	{
 		update_content(this.operator  +","+ this.blockID + "," + "connected to" + "," + target.element.operator + "," + target.element.blockID);//Alaura, Austin S: Changed target.element.data_set.name to target.element.operator
-		this.wasConnected = true;// Austin S.
-		this.lastParent = target.element; //Austin S.
 		this.isNew = false;// Austin S., prevents the next calls to .snap() from producing "moved" logs after the block initially moved from the template
 	}
 
@@ -2625,6 +2612,11 @@ OperatorGroupByMorph.prototype.accept = function () {
 //    this.mouseClickLeft();
 };
 
+//Austin S., this function is called for the parent block when a child block is being grabbed by the mouse
+OperatorGroupByMorph.prototype.reactToGrabOf = function(aMorph) {
+	aMorph.isDisconnected = true;
+	aMorph.lastParent = this;
+};
 
 var OperatorRenameMorph; // == CommandBlockMorph
 OperatorRenameMorph.prototype = new BaseBlockMorph();
@@ -2681,7 +2673,7 @@ OperatorRenameMorph.prototype.init = function (op_name, query, input, color, par
     this.get_relalg = relalg_operators[query];
     this.get_query = query_operators[query];
 
-	this.wasConnected = false;// Austin S., for determining if Block was connected on last call to .snap()
+	this.isDisconnected = false;// Austin S., for use in the .snap() function, specifies whether the block was disconnected from the last parent of the block
 	this.lastParent = null;// Austin S., for logging the last parent this Block was connected to
 	this.isNew = true;// Austin S., for determining if Block came straight from the template, preventing subsequent "moved" logs
 };
@@ -2719,30 +2711,24 @@ OperatorRenameMorph.prototype.snap = function () {
     script.clearDropHistory();
     script.lastDroppedBlock = this;
 
-    //Austin S. Reimplemented
+	//Austin S. Reimplemented
+	if(this.isDisconnected)
+	{
+		update_content(this.operator + "," + this.blockID + "," + "disconnected from" + "," + this.lastParent.operator + "," + this.lastParent.blockID);// Austin S.
+		this.isDisconnected = false; // Austin S.
+	}
 	if (target === null)
 	{
-		if(this.wasConnected)
-		{
-			update_content(this.operator + "," + this.blockID + "," + "disconnected from" + "," + this.lastParent.operator + "," + this.lastParent.blockID);// Austin S.
-			this.wasConnected = false;// Austin S.
-			this.lastParent = null;// Austin S.
-		}
-		else
-		{
-			if(this.isNew)
-			{
-				update_content(this.operator + "," + this.blockID + "," + "moved");//Alaura, Austin S: Changed this.data_set.name to this.operator
-			}
-		}
-		this.isNew = false;// Austin S., prevents the next calls to .snap() from producing "moved" logs after the block initially moved from the template
-		return;
+	    if(this.isNew)
+	    {
+	        update_content(this.operator + "," + this.blockID + "," + "moved");//Alaura, Austin S: Changed this.data_set.name to this.operator
+	    }
+	    this.isNew = false;// Austin S., prevents the next calls to .snap() from producing "moved" logs after the block initially moved from the template
+        return;
 	}
 	else
 	{
 		update_content(this.operator  +","+ this.blockID + "," + "connected to" + "," + target.element.operator + "," + target.element.blockID);//Alaura, Austin S: Changed target.element.data_set.name to target.element.operator
-		this.wasConnected = true;// Austin S.
-		this.lastParent = target.element; //Austin S.
 		this.isNew = false;// Austin S., prevents the next calls to .snap() from producing "moved" logs after the block initially moved from the template
 	}
 
@@ -2785,6 +2771,11 @@ OperatorRenameMorph.prototype.accept = function () {
 //    this.mouseClickLeft();
 };
 
+//Austin S., this function is called for the parent block when a child block is being grabbed by the mouse
+OperatorRenameMorph.prototype.reactToGrabOf = function(aMorph) {
+	aMorph.isDisconnected = true;
+	aMorph.lastParent = this;
+};
 
 var OperatorJoinMorph;
 OperatorJoinMorph.prototype = new BaseBlockMorph();
@@ -2814,7 +2805,7 @@ OperatorJoinMorph.prototype.init = function (name, color, query) {
     this.setExtent(new Point(200, 125));
     this.isTemplate = true;
 
-	this.wasConnected = false;// Austin S., for determining if Block was connected on last call to .snap()
+	this.isDisconnected = false;// Austin S., for use in the .snap() function, specifies whether the block was disconnected from the last parent of the block
 	this.lastParent = null;// Austin S., for logging the last parent this Block was connected to
 	this.isNew = true;// Austin S., for determining if Block came straight from the template, preventing subsequent "moved" logs
 };
@@ -2869,33 +2860,22 @@ OperatorJoinMorph.prototype.snap = function () {
     script.clearDropHistory();
     script.lastDroppedBlock = this;
 
-    //Austin S. Reimplemented
+	//Austin S. Reimplemented
+	if(this.isDisconnected)
+	{
+		update_content(this.operator + "," + this.blockID + "," + "disconnected from" + "," + this.lastParent.operator + "," + this.lastParent.blockID);// Austin S.
+		this.isDisconnected = false; // Austin S.
+	}
     if (target === null)
     {
-		if(this.wasConnected)
-		{
-			if(this.fillColor == "Black")
-			{
-				update_content("Cross_Product" + "," + this.blockID + "," + "disconnected from" + "," + this.lastParent.operator + "," + this.lastParent.blockID);// Austin S.
-			}
-			else
-			{
-				update_content(this.operator + "," + this.blockID + "," + "disconnected from" + "," + this.lastParent.operator + "," + this.lastParent.blockID);// Austin S.
-			}
-			this.wasConnected = false;// Austin S.
-			this.lastParent = null;// Austin S.
-		}
-		else
-		{
-			if(this.fillColor == "Black" && this.isNew)
-			{
-				update_content("Cross_Product"  +","+ this.blockID + "," + "moved");
-			}
-			else if(this.isNew)
-			{
-				update_content(this.operator  +","+ this.blockID + "," + "moved");//Alaura, Austin S: Changed this.data_set.name to this.operator
-			}
-		}
+        if(this.fillColor == "Black" && this.isNew)
+        {
+        	update_content("Cross_Product"  +","+ this.blockID + "," + "moved");
+        }
+        else if(this.isNew)
+        {
+        	update_content(this.operator  +","+ this.blockID + "," + "moved");//Alaura, Austin S: Changed this.data_set.name to this.operator
+        }
 		this.isNew = false;// Austin S., prevents the next calls to .snap() from producing "moved" logs after the block initially moved from the template
         return;
     }
@@ -2909,8 +2889,6 @@ OperatorJoinMorph.prototype.snap = function () {
 		{
 			update_content(this.operator  +","+ this.blockID + "," + "connected to" + "," + target.element.operator + "," + target.element.blockID);//Alaura, Austin S: Changed target.element.data_set.name to target.element.operator
 		}
-		this.wasConnected = true;// Austin S.
-		this.lastParent = target.element; //Austin S.
 		this.isNew = false;// Austin S., prevents the next calls to .snap() from producing "moved" logs after the block initially moved from the template
 	}
 
@@ -2933,6 +2911,11 @@ OperatorJoinMorph.prototype.snap = function () {
 //    this.fixLayout();
 };
 
+//Austin S., this function is called for the parent block when a child block is being grabbed by the mouse
+OperatorJoinMorph.prototype.reactToGrabOf = function(aMorph) {
+	aMorph.isDisconnected = true;
+	aMorph.lastParent = this;
+};
 
 var OperatorUnionMorph;
 OperatorUnionMorph.prototype = new BaseBlockMorph();
@@ -2973,7 +2956,7 @@ OperatorUnionMorph.prototype.init = function (name, color, query) {
     this.setExtent(new Point(200, 125));
     this.isTemplate = true;
 
-    this.wasConnected = false;// Austin S., for determining if Block was connected on last call to .snap()
+	this.isDisconnected = false;// Austin S., for use in the .snap() function, specifies whether the block was disconnected from the last parent of the block
 	this.lastParent = null;// Austin S., for logging the last parent this Block was connected to
 	this.isNew = true;// Austin S., for determining if Block came straight from the template, preventing subsequent "moved" logs
 };
@@ -3029,38 +3012,25 @@ OperatorUnionMorph.prototype.snap = function () {
     script.lastDroppedBlock = this;
 
 	//Austin S. Reimplemented
+	if(this.isDisconnected)
+	{
+		update_content(this.operator + "," + this.blockID + "," + "disconnected from" + "," + this.lastParent.operator + "," + this.lastParent.blockID);// Austin S.
+		this.isDisconnected = false; // Austin S.
+	}
     if (target === null)
     {
-    	if(this.wasConnected)
-		{
-			if(this.fillColor == "LightSeaGreen")
-			{
-				update_content("Difference" + "," + this.blockID + "," + "disconnected from" + "," + this.lastParent.operator + "," + this.lastParent.blockID);// Austin S.
-			}
-			else if(this.fillColor == "Chocolate")
-			{
-				update_content("Intersection" + "," + this.blockID + "," + "disconnected from" + "," + this.lastParent.operator + "," + this.lastParent.blockID);// Austin S.
-			}
-			else
-			{
-				update_content(this.operator + "," + this.blockID + "," + "disconnected from" + "," + this.lastParent.operator + "," + this.lastParent.blockID);// Austin S.
-			}
-		}
-		else
-		{
-			if(this.fillColor == "LightSeaGreen" && this.isNew)
-			{
-				update_content("Difference"  +","+ this.blockID + "," + "moved");
-			}
-			else if(this.fillColor == "Chocolate" && this.isNew)
-			{
-				update_content("Intersection"  +","+ this.blockID + "," + "moved");
-			}
-			else if(this.isNew)
-			{
-				update_content(this.operator +","+ this.blockID + "," + "moved");
-			}
-		}
+    	if(this.fillColor == "LightSeaGreen" && this.isNew)
+    	{
+    		update_content("Difference"  +","+ this.blockID + "," + "moved");
+    	}
+    	else if(this.fillColor == "Chocolate" && this.isNew)
+    	{
+    		update_content("Intersection"  +","+ this.blockID + "," + "moved");
+    	}
+    	else if(this.isNew)
+    	{
+    		update_content(this.operator +","+ this.blockID + "," + "moved");
+    	}
 		this.isNew = false;// Austin S., prevents the next calls to .snap() from producing "moved" logs after the block initially moved from the template
         return;
     }
@@ -3078,8 +3048,6 @@ OperatorUnionMorph.prototype.snap = function () {
 		{
 			update_content(this.operator +","+ this.blockID + "," + "connected to" + "," + target.element.operator + "," + target.element.blockID)//Alaura, Austin S: Changed target.element.data_set.name to target.element.operator
 		}
-		this.wasConnected = true;// Austin S.
-		this.lastParent = target.element; //Austin S.
 		this.isNew = false;// Austin S., prevents the next calls to .snap() from producing "moved" logs after the block initially moved from the template
 	}
 
@@ -3102,6 +3070,11 @@ OperatorUnionMorph.prototype.snap = function () {
 //    this.fixLayout();
 };
 
+//Austin S., this function is called for the parent block when a child block is being grabbed by the mouse
+OperatorUnionMorph.prototype.reactToGrabOf = function(aMorph) {
+	aMorph.isDisconnected = true;
+	aMorph.lastParent = this;
+};
 
 var ThetaJoinInputMorph;
 ThetaJoinInputMorph.prototype = new Morph();
@@ -3156,7 +3129,7 @@ OperatorThetaJoinMorph.prototype.init = function (name, params) {
     this.isTemplate = true;
     this.drawNew();
 
-	this.wasConnected = false;// Austin S., for determining if Block was connected on last call to .snap()
+	this.isDisconnected = false;// Austin S., for use in the .snap() function, specifies whether the block was disconnected from the last parent of the block
 	this.lastParent = null;// Austin S., for logging the last parent this Block was connected to
 	this.isNew = true;// Austin S., for determining if Block came straight from the template, preventing subsequent "moved" logs
 };
@@ -3257,20 +3230,16 @@ OperatorThetaJoinMorph.prototype.snap = function () {
     script.lastDroppedBlock = this;
 
 	//Austin S. Reimplemented
+	if(this.isDisconnected)
+	{
+		update_content(this.operator + "," + this.blockID + "," + "disconnected from" + "," + this.lastParent.operator + "," + this.lastParent.blockID);// Austin S.
+		this.isDisconnected = false; // Austin S.
+	}
 	if (target === null)
 	{
-		if(this.wasConnected)
+		if(this.isNew)
 		{
-			update_content(this.operator + "," + this.blockID + "," + "disconnected from" + "," + this.lastParent.operator + "," + this.lastParent.blockID);// Austin S.
-			this.wasConnected = false;// Austin S.
-			this.lastParent = null;// Austin S.
-		}
-		else
-		{
-			if(this.isNew)
-			{
-				update_content(this.operator + "," + this.blockID + "," + "moved");//Alaura, Austin S: Changed this.data_set.name to this.operator
-			}
+			update_content(this.operator + "," + this.blockID + "," + "moved");//Alaura, Austin S: Changed this.data_set.name to this.operator
 		}
 		this.isNew = false;// Austin S., prevents the next calls to .snap() from producing "moved" logs after the block initially moved from the template
 		return;
@@ -3278,8 +3247,6 @@ OperatorThetaJoinMorph.prototype.snap = function () {
 	else
 	{
 		update_content(this.operator  +","+ this.blockID + "," + "connected to" + "," + target.element.operator + "," + target.element.blockID);//Alaura, Austin S: Changed target.element.data_set.name to target.element.operator
-		this.wasConnected = true;// Austin S.
-		this.lastParent = target.element; //Austin S.
 		this.isNew = false;// Austin S., prevents the next calls to .snap() from producing "moved" logs after the block initially moved from the template
 	}
 
@@ -3302,6 +3269,11 @@ OperatorThetaJoinMorph.prototype.snap = function () {
 //    this.fixLayout();
 };
 
+//Austin S., this function is called for the parent block when a child block is being grabbed by the mouse
+OperatorThetaJoinMorph.prototype.reactToGrabOf = function(aMorph) {
+	aMorph.isDisconnected = true;
+	aMorph.lastParent = this;
+};
 
 var DataSetBlockMorph;
 DataSetBlockMorph.prototype = new BaseBlockMorph();
@@ -3351,10 +3323,9 @@ DataSetBlockMorph.prototype.init = function (data, name, queryParent) {
     }
     this.add(block_name);
 
-	this.wasConnected = false;// Austin S., for determining if Block was connected on last call to .snap()
+    this.isDisconnected = false;// Austin S., for use in the .snap() function, specifies whether the block was disconnected from the last parent of the block
 	this.lastParent = null;// Austin S., for logging the last parent this Block was connected to
     this.isNew = true;// Austin S., for determining if Block came straight from the template, preventing subsequent "moved" logs
-    // this.isDisconnected = false; // Austin S., for implementation later for improved logging with disconnecting blocks.
 };
 DataSetBlockMorph.prototype.drawNew = function () {
     var context;
@@ -3381,28 +3352,19 @@ DataSetBlockMorph.prototype.snap = function () {
     var target = this.closestAttachTarget(), script = this.parentThatIsA(ScriptMorph), next, offset_y, affected;
     script.clearDropHistory();
     script.lastDroppedBlock = this;
-    /*
+
+	//Austin S. Reimplemented
 	if(this.isDisconnected)
 	{
 		update_content(this.operator + "," + this.blockID + "," + "disconnected from" + "," + this.lastParent.operator + "," + this.lastParent.blockID);// Austin S.
-        this.isDisconnected = false;
+		this.isDisconnected = false; // Austin S.
 	}
-	*/
 	//Austin S. Reimplemented
 	if (target === null)
 	{
-		if(this.wasConnected)
+		if(this.isNew)
 		{
-			update_content(this.operator + "," + this.blockID + "," + "disconnected from" + "," + this.lastParent.operator + "," + this.lastParent.blockID);// Austin S.
-			this.wasConnected = false;// Austin S.
-			this.lastParent = null;// Austin S.
-		}
-		else
-		{
-		    if(this.isNew)
-            {
-				update_content(this.operator + "," + this.blockID + "," + "moved");//Alaura, Austin S: Changed this.data_set.name to this.operator
-            }
+			update_content(this.operator + "," + this.blockID + "," + "moved");//Alaura, Austin S: Changed this.data_set.name to this.operator
 		}
 		this.isNew = false;// Austin S., prevents the next calls to .snap() from producing "moved" logs after the block initially moved from the template
 		return;
@@ -3410,8 +3372,6 @@ DataSetBlockMorph.prototype.snap = function () {
 	else
 	{
 		update_content(this.operator  +","+ this.blockID + "," + "connected to" + "," + target.element.operator + "," + target.element.blockID);//Alaura, Austin S: Changed target.element.data_set.name to target.element.operator
-		this.wasConnected = true;// Austin S.
-		this.lastParent = target.element; //Austin S.
 		this.isNew = false;// Austin S., prevents the next calls to .snap() from producing "moved" logs after the block initially moved from the template
 	}
 
@@ -3507,6 +3467,20 @@ function download_csv(){
 }
 
 
+// Handles the deletion logging. For cases when user deletes a Block with a chain or tree of Morphs attached to it. Traverses through the tree/chain InOrder.
+function deletionLoggingBinaryTreeTraversal(root)
+{
+	function inOrderTraversal(morphNode)
+	{
+		if(morphNode)
+		{
+			inOrderTraversal(morphNode.getChildBlocks()[0]); // Austin S., Recursively handle the left node
+			update_content(morphNode.operator + "," + morphNode.blockID + "," + "deleted"); //Austin S., logging for deletion of block
+			inOrderTraversal(morphNode.getChildBlocks()[1]); // Austin S., Recursively handle the right node
+		}
+	}
+	inOrderTraversal(root);
+}
 //start here
 
 /*var ViewDataSetBlockMorph;
