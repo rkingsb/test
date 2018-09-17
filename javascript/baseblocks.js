@@ -3359,7 +3359,6 @@ DataSetBlockMorph.prototype.snap = function () {
 		update_content(this.operator + "," + this.blockID + "," + "disconnected from" + "," + this.lastParent.operator + "," + this.lastParent.blockID);// Austin S.
 		this.isDisconnected = false; // Austin S.
 	}
-	//Austin S. Reimplemented
 	if (target === null)
 	{
 		if(this.isNew)

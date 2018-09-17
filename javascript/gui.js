@@ -192,7 +192,18 @@ GuiMorph.prototype.createOperatorsMenu = function(){
     this.operatorsMenu = new ScrollFrameMorph();
     var myself = this;
     this.operatorsMenu.contents.reactToDropOf = function(droppedMorph, hand){
-        deletionLoggingBinaryTreeTraversal(droppedMorph); // Austin S., better implementation of logging when a block is deleted
+        if(droppedMorph.isDisconnected) // Austin S., ensures that it logs disconnection before deletion. For User case of if user disconnects a Block and then drops it onto the template for deletion.
+        {
+			update_content(droppedMorph.operator + "," + droppedMorph.blockID + "," + "disconnected from" + "," + droppedMorph.lastParent.operator + "," + droppedMorph.lastParent.blockID);// Austin S.
+        }
+        if(!droppedMorph.isNew) // Austin S., ensures that a new Block logs "add-removed" instead of logging "deleted". For User case of if user picks up a Block from template and then drops it back onto the template.
+        {
+			deletionLoggingBinaryTreeTraversal(droppedMorph); // Austin S., better implementation of logging when a block is deleted
+        }
+        else
+        {
+			update_content(droppedMorph.operator + "," + droppedMorph.blockID + "," + "add-removed"); // Austin S., for when a Block from the template is picked up and dropped back onto template, logs Block has been "add-removed".
+		}
         droppedMorph.destroy();
         var script = myself.sandbox_script;
         script.queryUpdate();
