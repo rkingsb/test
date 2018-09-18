@@ -2409,13 +2409,20 @@ OperatorMorph.prototype.snap = function () {
 		update_content(this.operator + "," + this.blockID + "," + "disconnected from" + "," + this.lastParent.operator + "," + this.lastParent.blockID);// Austin S.
 		this.isDisconnected = false; // Austin S.
 	}
+	if(this.isNew)
+	{
+		update_content(this.operator + "," + this.blockID + "," + "moved");//Alaura, Austin S: Changed this.data_set.name to this.operator
+		this.isNew = false;// Austin S., prevents the next calls to .snap() from producing "moved" logs after the block initially moved from the template
+	}
     if (target === null)
     {
+        /*
         if(this.isNew)
         {
             update_content(this.operator + "," + this.blockID + "," + "moved");//Alaura, Austin S: Changed this.data_set.name to this.operator
         }
 		this.isNew = false;// Austin S., prevents the next calls to .snap() from producing "moved" logs after the block initially moved from the template
+		*/
         return;
     }
     else
@@ -2559,13 +2566,20 @@ OperatorGroupByMorph.prototype.snap = function () {
 		update_content(this.operator + "," + this.blockID + "," + "disconnected from" + "," + this.lastParent.operator + "," + this.lastParent.blockID);// Austin S.
 		this.isDisconnected = false; // Austin S.
 	}
+	if(this.isNew)
+	{
+		update_content(this.operator + "," + this.blockID + "," + "moved");//Alaura, Austin S: Changed this.data_set.name to this.operator
+	}
+	this.isNew = false;// Austin S., prevents the next calls to .snap() from producing "moved" logs after the block initially moved from the template
 	if (target === null)
 	{
+	    /*
 	    if(this.isNew)
 	    {
 	        update_content(this.operator + "," + this.blockID + "," + "moved");//Alaura, Austin S: Changed this.data_set.name to this.operator
 	    }
 		this.isNew = false;// Austin S., prevents the next calls to .snap() from producing "moved" logs after the block initially moved from the template
+		*/
 		return;
 	}
 	else
@@ -2717,13 +2731,20 @@ OperatorRenameMorph.prototype.snap = function () {
 		update_content(this.operator + "," + this.blockID + "," + "disconnected from" + "," + this.lastParent.operator + "," + this.lastParent.blockID);// Austin S.
 		this.isDisconnected = false; // Austin S.
 	}
+	if(this.isNew)
+	{
+		update_content(this.operator + "," + this.blockID + "," + "moved");//Alaura, Austin S: Changed this.data_set.name to this.operator
+	}
+	this.isNew = false;// Austin S., prevents the next calls to .snap() from producing "moved" logs after the block initially moved from the template
 	if (target === null)
 	{
+	    /*
 	    if(this.isNew)
 	    {
 	        update_content(this.operator + "," + this.blockID + "," + "moved");//Alaura, Austin S: Changed this.data_set.name to this.operator
 	    }
 	    this.isNew = false;// Austin S., prevents the next calls to .snap() from producing "moved" logs after the block initially moved from the template
+	    */
         return;
 	}
 	else
@@ -2863,11 +2884,31 @@ OperatorJoinMorph.prototype.snap = function () {
 	//Austin S. Reimplemented
 	if(this.isDisconnected)
 	{
-		update_content(this.operator + "," + this.blockID + "," + "disconnected from" + "," + this.lastParent.operator + "," + this.lastParent.blockID);// Austin S.
+		if(this.fillColor == "Black")
+		{
+			update_content("Cross_Product"  +","+ this.blockID + "," + "disconnected from" + "," + this.lastParent.operator + "," + this.lastParent.blockID);
+		}
+		else
+		{
+			update_content(this.operator  +","+ this.blockID + "," + "disconnected from" + "," + this.lastParent.operator + "," + this.lastParent.blockID);
+		}
 		this.isDisconnected = false; // Austin S.
 	}
+	if(this.isNew)
+	{
+		if(this.fillColor == "Black")
+		{
+			update_content("Cross_Product"  +","+ this.blockID + "," + "moved");
+		}
+		else
+		{
+			update_content(this.operator  +","+ this.blockID + "," + "moved");//Alaura, Austin S: Changed this.data_set.name to this.operator
+		}
+	}
+	this.isNew = false;// Austin S., prevents the next calls to .snap() from producing "moved" logs after the block initially moved from the template
     if (target === null)
     {
+        /*
         if(this.fillColor == "Black" && this.isNew)
         {
         	update_content("Cross_Product"  +","+ this.blockID + "," + "moved");
@@ -2877,6 +2918,7 @@ OperatorJoinMorph.prototype.snap = function () {
         	update_content(this.operator  +","+ this.blockID + "," + "moved");//Alaura, Austin S: Changed this.data_set.name to this.operator
         }
 		this.isNew = false;// Austin S., prevents the next calls to .snap() from producing "moved" logs after the block initially moved from the template
+		*/
         return;
     }
     else
@@ -3014,11 +3056,39 @@ OperatorUnionMorph.prototype.snap = function () {
 	//Austin S. Reimplemented
 	if(this.isDisconnected)
 	{
-		update_content(this.operator + "," + this.blockID + "," + "disconnected from" + "," + this.lastParent.operator + "," + this.lastParent.blockID);// Austin S.
+		if(this.fillColor == "LightSeaGreen")
+		{
+			update_content("Difference"  +","+ this.blockID + "," + "disconnected from" + "," + this.lastParent.operator + "," + this.lastParent.blockID);
+		}
+		else if(this.fillColor == "Chocolate")
+		{
+			update_content("Intersection"  +","+ this.blockID + "," + "disconnected from" + "," + this.lastParent.operator + "," + this.lastParent.blockID);
+		}
+		else
+		{
+			update_content(this.operator  +","+ this.blockID + "," + "disconnected from" + "," + this.lastParent.operator + "," + this.lastParent.blockID);
+		}
 		this.isDisconnected = false; // Austin S.
 	}
+	if(this.isNew)
+	{
+		if(this.fillColor == "LightSeaGreen")
+		{
+			update_content("Difference"  +","+ this.blockID + "," + "moved");
+		}
+		else if(this.fillColor == "Chocolate")
+		{
+			update_content("Intersection"  +","+ this.blockID + "," + "moved");
+		}
+		else
+		{
+			update_content(this.operator +","+ this.blockID + "," + "moved");
+		}
+	}
+	this.isNew = false;// Austin S., prevents the next calls to .snap() from producing "moved" logs after the block initially moved from the template
     if (target === null)
     {
+        /*
     	if(this.fillColor == "LightSeaGreen" && this.isNew)
     	{
     		update_content("Difference"  +","+ this.blockID + "," + "moved");
@@ -3032,6 +3102,7 @@ OperatorUnionMorph.prototype.snap = function () {
     		update_content(this.operator +","+ this.blockID + "," + "moved");
     	}
 		this.isNew = false;// Austin S., prevents the next calls to .snap() from producing "moved" logs after the block initially moved from the template
+		*/
         return;
     }
     else
@@ -3235,19 +3306,26 @@ OperatorThetaJoinMorph.prototype.snap = function () {
 		update_content(this.operator + "," + this.blockID + "," + "disconnected from" + "," + this.lastParent.operator + "," + this.lastParent.blockID);// Austin S.
 		this.isDisconnected = false; // Austin S.
 	}
+	if(this.isNew)
+	{
+		update_content(this.operator + "," + this.blockID + "," + "moved");//Alaura, Austin S: Changed this.data_set.name to this.operator
+	}
+	this.isNew = false;// Austin S., prevents the next calls to .snap() from producing "moved" logs after the block initially moved from the template
 	if (target === null)
 	{
+	    /*
 		if(this.isNew)
 		{
 			update_content(this.operator + "," + this.blockID + "," + "moved");//Alaura, Austin S: Changed this.data_set.name to this.operator
 		}
 		this.isNew = false;// Austin S., prevents the next calls to .snap() from producing "moved" logs after the block initially moved from the template
+		*/
 		return;
 	}
 	else
 	{
 		update_content(this.operator  +","+ this.blockID + "," + "connected to" + "," + target.element.operator + "," + target.element.blockID);//Alaura, Austin S: Changed target.element.data_set.name to target.element.operator
-		this.isNew = false;// Austin S., prevents the next calls to .snap() from producing "moved" logs after the block initially moved from the template
+		//this.isNew = false;// Austin S., prevents the next calls to .snap() from producing "moved" logs after the block initially moved from the template
 	}
 
 	clickSound();
@@ -3359,13 +3437,20 @@ DataSetBlockMorph.prototype.snap = function () {
 		update_content(this.operator + "," + this.blockID + "," + "disconnected from" + "," + this.lastParent.operator + "," + this.lastParent.blockID);// Austin S.
 		this.isDisconnected = false; // Austin S.
 	}
+	if(this.isNew)
+	{
+		update_content(this.operator + "," + this.blockID + "," + "moved");//Alaura, Austin S: Changed this.data_set.name to this.operator
+	}
+	this.isNew = false;// Austin S., prevents the next calls to .snap() from producing "moved" logs after the block initially moved from the template
 	if (target === null)
 	{
+	    /*
 		if(this.isNew)
 		{
 			update_content(this.operator + "," + this.blockID + "," + "moved");//Alaura, Austin S: Changed this.data_set.name to this.operator
 		}
 		this.isNew = false;// Austin S., prevents the next calls to .snap() from producing "moved" logs after the block initially moved from the template
+		*/
 		return;
 	}
 	else
@@ -3474,7 +3559,36 @@ function deletionLoggingBinaryTreeTraversal(root)
 		if(morphNode)
 		{
 			inOrderTraversal(morphNode.getChildBlocks()[0]); // Austin S., Recursively handle the left node
-			update_content(morphNode.operator + "," + morphNode.blockID + "," + "deleted"); //Austin S., logging for deletion of block
+            if(morphNode.operator === "NaturalJoin")
+            {
+                if(morphNode.fillColor === "Black")
+                {
+					update_content("Cross_Product" + "," + morphNode.blockID + "," + "deleted"); //Austin S., logging for deletion of block
+                }
+                else
+                {
+					update_content(morphNode.operator + "," + morphNode.blockID + "," + "deleted"); //Austin S., logging for deletion of block
+                }
+            }
+            else if(morphNode.operator === "Union")
+            {
+                if(morphNode.fillColor === "LightSeaGreen")
+                {
+					update_content("Difference" + "," + morphNode.blockID + "," + "deleted"); //Austin S., logging for deletion of block
+                }
+                else if(morphNode.fillColor === "Chocolate")
+                {
+					update_content("Intersection" + "," + morphNode.blockID + "," + "deleted"); //Austin S., logging for deletion of block
+                }
+                else
+                {
+					update_content(morphNode.operator + "," + morphNode.blockID + "," + "deleted"); //Austin S., logging for deletion of block
+                }
+            }
+            else
+            {
+                update_content(morphNode.operator + "," + morphNode.blockID + "," + "deleted"); //Austin S., logging for deletion of block
+            }
 			inOrderTraversal(morphNode.getChildBlocks()[1]); // Austin S., Recursively handle the right node
 		}
 	}

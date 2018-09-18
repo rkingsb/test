@@ -194,7 +194,36 @@ GuiMorph.prototype.createOperatorsMenu = function(){
     this.operatorsMenu.contents.reactToDropOf = function(droppedMorph, hand){
         if(droppedMorph.isDisconnected) // Austin S., ensures that it logs disconnection before deletion. For User case of if user disconnects a Block and then drops it onto the template for deletion.
         {
-			update_content(droppedMorph.operator + "," + droppedMorph.blockID + "," + "disconnected from" + "," + droppedMorph.lastParent.operator + "," + droppedMorph.lastParent.blockID);// Austin S.
+			if(droppedMorph.operator === "NaturalJoin")
+			{
+				if(droppedMorph.fillColor === "Black")
+				{
+					update_content("Cross_Product" + "," + droppedMorph.blockID + "," + "disconnected from" + "," + droppedMorph.lastParent.operator + "," + droppedMorph.lastParent.blockID); //Austin S., logging for deletion of block
+				}
+				else
+				{
+					update_content(droppedMorph.operator + "," + droppedMorph.blockID + "," + "disconnected from" + "," + droppedMorph.lastParent.operator + "," + droppedMorph.lastParent.blockID); //Austin S., logging for deletion of block
+				}
+			}
+			else if(droppedMorph.operator === "Union")
+			{
+				if(droppedMorph.fillColor === "LightSeaGreen")
+				{
+					update_content("Difference" + "," + droppedMorph.blockID + "," + "disconnected from" + "," + droppedMorph.lastParent.operator + "," + droppedMorph.lastParent.blockID); //Austin S., logging for deletion of block
+				}
+				else if(droppedMorph.fillColor === "Chocolate")
+				{
+					update_content("Intersection" + "," + droppedMorph.blockID + "," + "disconnected from" + "," + droppedMorph.lastParent.operator + "," + droppedMorph.lastParent.blockID); //Austin S., logging for deletion of block
+				}
+				else
+				{
+					update_content(droppedMorph.operator + "," + droppedMorph.blockID + "," + "disconnected from" + "," + droppedMorph.lastParent.operator + "," + droppedMorph.lastParent.blockID); //Austin S., logging for deletion of block
+				}
+			}
+			else
+			{
+				update_content(droppedMorph.operator + "," + droppedMorph.blockID + "," + "disconnected from" + "," + droppedMorph.lastParent.operator + "," + droppedMorph.lastParent.blockID); //Austin S., logging for deletion of block
+			}
         }
         if(!droppedMorph.isNew) // Austin S., ensures that a new Block logs "add-removed" instead of logging "deleted". For User case of if user picks up a Block from template and then drops it back onto the template.
         {
