@@ -3325,7 +3325,7 @@ OperatorThetaJoinMorph.prototype.snap = function () {
 	else
 	{
 		update_content(this.operator  +","+ this.blockID + "," + "connected to" + "," + target.element.operator + "," + target.element.blockID);//Alaura, Austin S: Changed target.element.data_set.name to target.element.operator
-		//this.isNew = false;// Austin S., prevents the next calls to .snap() from producing "moved" logs after the block initially moved from the template
+		this.isNew = false;// Austin S., prevents the next calls to .snap() from producing "moved" logs after the block initially moved from the template
 	}
 
 	clickSound();
