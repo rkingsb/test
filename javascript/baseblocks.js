@@ -1511,6 +1511,7 @@ ScriptMorph.prototype.queryUpdate = function () {
             var query = roots[0].get_relalg();
             if (query) {
                 textbox.setText(query['relalg']);
+                update_content("UPDATED RELATIONAL ALGEBRA" + "," + query['relalg']); // Austin S. for logging Relational Algebra
             }
             //Anthony Van Nieuwenhuyse 1376-1379 (Fixed display text when query error.)
             else {
@@ -3533,10 +3534,9 @@ function update_content (row_text){//Alaura
 
 
 // update csv with new row
-    var new_row = Date() +","+ row_text;
+    var log = new Date(); // Austin S., create instance of Date
+    var new_row = log.toTimeString().split(" ", 1)[0] + "," + row_text; // Austin S., Get time out of Date and extract only the time portion from it
     csv_data.push(new_row);
-
-
 }
 function download_csv(){
     var downloadlink;
